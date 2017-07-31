@@ -1,0 +1,32 @@
+{
+  "name": "scrummasterbetsy",
+  "description": "virtual scrum master",
+  "version": "0.0.1",
+  "private": true,
+  "license": "Apache Version 2.0",
+  "author": "Google Inc.",
+  "main": "app.js",
+  "scripts": {
+    "lint": "semistandard --fix \"**/*.js\"",
+    "start": "node app.js",
+    "monitor": "nodemon app.js",
+    "deploy": "gcloud app deploy"
+  },
+  "engines": {
+    "node": "6.11.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.13.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.14.0",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "python-shell": "^0.4.0",
+    "sprintf-js": "^1.0.3",
+    "actions-on-google": "^1.0.0"    
+  },
+  "devDependencies": {
+    "semistandard": "^9.1.0"
+  }
+}
