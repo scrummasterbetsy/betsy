@@ -49,7 +49,7 @@ app.post('/', function (req, res) {
  function BackLogItems(assistant) {
    console.log('BackLogItems');
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
-   assistant.ask('These is the backlog item intent. '+nextPrompt);
+   assistant.ask('These is the backlog item intent test. '+nextPrompt);
  }
   
   let actionMap = new Map();
