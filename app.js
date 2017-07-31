@@ -43,13 +43,13 @@ app.post('/', function (req, res) {
  function UserStories(assistant) {
    console.log('UserStories');
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
-   assistant.ask('These is the user story intent. '+nextPrompt);
+   assistant.ask('This is the user story intent. '+nextPrompt);
  }
   
  function BackLogItems(assistant) {
    console.log('BackLogItems');
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
-   assistant.ask('These is the backlog item intent test. '+nextPrompt);
+   assistant.ask('This is the backlog item intent test. '+nextPrompt);
  }
   
   let actionMap = new Map();
