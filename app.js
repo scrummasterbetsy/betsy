@@ -49,7 +49,7 @@ app.post('/', function (req, res) {
 
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
-   console.log('ListItems');
+   console.log('+++ListItems+++');
    // Set the headers
   var headers = {
     'User-Agent':       'Super Agent/0.0.1',
