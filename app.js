@@ -4,6 +4,7 @@ process.env.DEBUG = 'actions-on-google:*';
 let Assistant = require('actions-on-google').ApiAiAssistant;
 let express = require('express');
 let bodyParser = require('body-parser');
+let request = require('request');
 
 let app = express();
 app.use(bodyParser.json({type: 'application/json'}));
@@ -51,12 +52,47 @@ app.post('/', function (req, res) {
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
    assistant.ask('This is the backlog item intent test. '+nextPrompt);
  }
+
+///////////////////////////////////////////////////////  
+ function ListItems(assistant) {
+   console.log('ListItems');
+   // Set the headers
+  var headers = {
+    'User-Agent':       'Super Agent/0.0.1',
+    'Content-Type':     'application/x-www-form-urlencoded'
+  }
+
+  // Configure the request
+  var options = {
+    url: 'https://projectbetsy.atlassian.net/rest/api/2/search',
+    method: 'GET',
+    headers: headers,
+    qs: {'jql': 'project=DBETSY'},
+    auth = "Basic YmV0c3k6QmV0c3lCb3Q4MjI=" 
+  }
+
+  // Start the request
+  request(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+        // Print out the response body
+        console.log(body);
+
+    }
+  })  // end request 
+ 
+   
+   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
+   assistant.ask('This is the list items intent. '+nextPrompt);
+ }
+  ////////////////////////////////////////  
+  
   
   let actionMap = new Map();
   actionMap.set('input.settaskstatus', SetTaskStatus);
   actionMap.set('input.issues', ProcessIssues);
   actionMap.set('input.userstories', UserStories);
-  actionMap.set('input.backlogitems', BackLogItems);
+  actionMap.set('input.backlogitems', BackLogItems);  
+  actionMap.set('input.listitems', ListItems);
   assistant.handleRequest(actionMap);
 
 });
