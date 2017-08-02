@@ -62,7 +62,7 @@ app.post('/', function (req, res) {
     method: 'GET',
     headers: headers,
     qs: {'jql': 'project=BETSY'},
-    auth : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=' 
+    authentication : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=' 
   }
 
   // Start the request
