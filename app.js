@@ -67,15 +67,16 @@ app.post('/', function (req, res) {
     url: 'https://projectbetsy.atlassian.net/rest/api/2/search',
     method: 'GET',
     headers: headers,
-    qs: {'jql': 'project=DBETSY'},
-    auth = "Basic YmV0c3k6QmV0c3lCb3Q4MjI=" 
+    qs: {'jql': 'project=BETSY'},
+    auth : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=' 
   }
 
   // Start the request
   request(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
         // Print out the response body
-        console.log(body);
+        let strJSON = JSON.parse(body);
+        console.log(strJSON);
 
     }
   })  // end request 
