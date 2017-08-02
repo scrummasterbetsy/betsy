@@ -46,12 +46,6 @@ app.post('/', function (req, res) {
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
    assistant.ask('This is the user story intent. '+nextPrompt);
  }
-  
- function BackLogItems(assistant) {
-   console.log('BackLogItems');
-   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
-   assistant.ask('This is the backlog item intent test. '+nextPrompt);
- }
 
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
@@ -96,7 +90,6 @@ app.post('/', function (req, res) {
   actionMap.set('input.settaskstatus', SetTaskStatus);
   actionMap.set('input.issues', ProcessIssues);
   actionMap.set('input.userstories', UserStories);
-  actionMap.set('input.backlogitems', BackLogItems);  
   actionMap.set('input.listitems', ListItems);
   assistant.handleRequest(actionMap);
 
