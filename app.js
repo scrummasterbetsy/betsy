@@ -54,16 +54,16 @@ app.post('/', function (req, res) {
    // Set the headers
   var headers = {
     'User-Agent':       'Super Agent/0.0.1',
-    'Content-Type':     'application/json'
+    'Content-Type':     'application/x-www-form-urlencoded'
   }
 
   // Configure the request
   var options = {
     url: 'https://projectbetsy.atlassian.net/rest/api/2/search',
+    authentication : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=',
     method: 'GET',
     headers: headers,
-    qs: {'jql': 'project%3DBETSY'},
-    authentication : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=' 
+    qs: {'jql': 'project%3DBETSY'}
   }
 
   // Start the request
