@@ -50,10 +50,11 @@ app.post('/', function (req, res) {
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
    console.log('+++ListItems+++');
+   
    // Set the headers
   var headers = {
     'User-Agent':       'Super Agent/0.0.1',
-    'Content-Type':     'application/x-www-form-urlencoded'
+    'Content-Type':     'application/json'
   }
 
   // Configure the request
@@ -68,7 +69,8 @@ app.post('/', function (req, res) {
   // Start the request
   request(options, function (error, response, body) {
     console.log('-------------------------------------------------------------'); 
-    console.log(error); 
+    console.log(error);     
+    console.log(response.statusCode); 
     if (!error && response.statusCode == 200) {
         // Print out the response body
         console.log('-------------------------------------------------------------');     
