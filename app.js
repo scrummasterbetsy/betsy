@@ -62,7 +62,7 @@ app.post('/', function (req, res) {
     url: 'https://projectbetsy.atlassian.net/rest/api/2/search',
     method: 'GET',
     headers: headers,
-    qs: {'jql': 'project=BETSY'},
+    qs: {'jql': 'project%3DBETSY'},
     authentication : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=' 
   }
 
