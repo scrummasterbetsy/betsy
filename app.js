@@ -88,7 +88,7 @@ app.post('/', function (req, res) {
         strOut +=':';
         for (var nInd=0; nInd<strJSON.total; nInd++) { 
            strOut += ' Issue '+strJSON.issues[nInd].key;
-           strOut += ', ID '+strJSON.issues[nInd].id;
+           strOut += ', I.D. '+strJSON.issues[nInd].id;
            strOut += ', Status '+strJSON.issues[nInd].fields.status.name;
            strOut += '.';
         } // end for     
