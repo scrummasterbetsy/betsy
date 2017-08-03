@@ -51,7 +51,7 @@ app.post('/', function (req, res) {
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
    console.log('+++ListItems+++');
-   //console.log(assistant.getRawInput());
+   console.log(assistant.getRawInput());
    let strHeadTail = assistant.getArgument('HeadTail');
    let strListSize = assistant.getArgument('ListSize');
    let strTaskStatus = assistant.getArgument('TaskStatus');
