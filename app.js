@@ -76,12 +76,13 @@ app.post('/', function (req, res) {
         // Prepare output     
         var strOut = 'There are a total of '+strJSON.total+' issues: ';
         for (var nInd=0; nInd<strJSON.total; nInd++) { 
+           console.log(strJSON.issues[nInd].fields);
            var strIssueName = strJSON.issues[nInd].key;
            var strIssueID = strJSON.issues[nInd].id;
            strOut = strOut + ' Issue '+strIssueName+ ', ID='+strIssueID+'.';
         } // end for     
         strOut = strOut + ' Here endeth the issue list.';
-        console.log(strOut);
+        //console.log(strOut);
         assistant.ask(strOut+nextPrompt);
     } // end if (!error && response.statusCode == 200)
   })  // end request 
