@@ -58,7 +58,7 @@ app.post('/', function (req, res) {
     authentication : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=',
     method: 'GET',
     headers: {'User-Agent': 'Mozilla/5.0', 'Content-Type':     'application/json'  },
-    qs: {'jql': 'project%3DBETSY'}
+    qs: {'jql': 'project=BETSY'}
   }
 
   // Start the request
