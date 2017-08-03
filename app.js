@@ -48,7 +48,7 @@ app.post('/', function (req, res) {
  }
 
 ///////////////////////////////////////////////////////  
- function ListItems(assistant) {
+ function ListItemsOLD(assistant) {
    console.log('+++ListItems+++');
    
    // Set the headers
@@ -80,14 +80,34 @@ app.post('/', function (req, res) {
 
     }
   })  // end request 
- 
+ }
+  ////////////////////////////////////////  
+  
+ ///////////////////////////////////////////////////////  
+ function ListItems(assistant) {
+   console.log('+++ListItems+++');
+   var url = 'http://graph.facebook.com/517267866/?fields=picture';
+
+   http.get(url, function(res){
+       var body = '';
+
+       res.on('data', function(chunk){
+           body += chunk;
+       });
+
+       res.on('end', function(){
+           var fbResponse = JSON.parse(body);
+           console.log("Got a response: ", fbResponse.picture);
+       });
+   }).on('error', function(e){
+      console.log("Got an error: ", e);
+   }); // end request
    
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
    assistant.ask('This is the list items intent. '+nextPrompt);
  }
-  ////////////////////////////////////////  
-  
-  
+  ////////////////////////////////////////
+         
   let actionMap = new Map();
   actionMap.set('input.settaskstatus', SetTaskStatus);
   actionMap.set('input.issues', ProcessIssues);
