@@ -76,10 +76,10 @@ app.post('/', function (req, res) {
         // Prepare output     
         var strOut = 'There are a total of '+strJSON.total+' issues: ';
         for (var nInd=0; nInd<strJSON.total; nInd++) { 
-           console.log(strJSON.issues[nInd].fields);
-           var strIssueName = strJSON.issues[nInd].key;
-           var strIssueID = strJSON.issues[nInd].id;
-           strOut = strOut + ' Issue '+strIssueName+ ', ID='+strIssueID+'.';
+           strOut = strOut + ' Issue '+strJSON.issues[nInd].key;
+           strOut = strOut + ', ID='+strJSON.issues[nInd].id;
+           strOut = strOut + ', Status='+strJSON.issues[nInd].fields.status.name;
+           strOut = strOut + '.';
         } // end for     
         strOut = strOut + ' Here endeth the issue list.';
         //console.log(strOut);
