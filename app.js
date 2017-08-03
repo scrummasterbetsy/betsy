@@ -84,7 +84,7 @@ app.post('/', function (req, res) {
         let strJSON = JSON.parse(body);
         //console.log(strJSON);
       
-        // Prepare output     
+        // Prepare output 
         let strOut = ' ';
         if (strJSON.total==1) {
           strOut = 'There is a total of '+strJSON.total+' issue';
@@ -93,7 +93,15 @@ app.post('/', function (req, res) {
         } // end if
         if (strTaskStatus) strOut += ' with Status '+strTaskStatus;
         strOut +=':';
-        for (let nInd=0; nInd<strJSON.total; nInd++) { 
+      
+        let nStart = 0;
+        let nEnd = strJSON.total;
+        if (strHeadTail=='First') nEnd = Math.min(nEnd,parseInt(strListSize));
+        if (strHeadTail=='Last') nStart = Math.max(nEnd,nEnd-parseInt(strListSize));
+        if (strHeadTail=='First' || strHeadTail=='Last') {
+          strOut += ' These are the '+strHeadTail+' '+parseInt(strListSize)+' items on the list: ';
+      
+        for (let nInd=nStart; nInd<nEnd; nInd++) { 
            strOut += ' Issue '+strJSON.issues[nInd].key;
            strOut += ', I.D.: '+strJSON.issues[nInd].id;
            strOut += ', Status: '+strJSON.issues[nInd].fields.status.name;
