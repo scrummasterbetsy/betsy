@@ -74,8 +74,7 @@ app.post('/', function (req, res) {
         console.log(strJSON);
       
         // Prepare output     
-        var strOut = 'These are the issues: ',
-        assistant.ask('These are the issues. '+strJSON.issues[0].key +nextPrompt);
+        var strOut = 'There are a total of '+strJSON.total+' issues: ',
         for (var nInd=0; nInd<strJSON.total; nInd++) { 
            var strIssueName = strJSON.issues[nInd].key;
            var strIssueID = strJSON.issues[nInd].id;
