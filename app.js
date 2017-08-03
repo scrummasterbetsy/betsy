@@ -55,7 +55,7 @@ app.post('/', function (req, res) {
   // Configure the request
   var options = {
     url: 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY',
-    authentication : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=',
+    authorization : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=',
     method: 'GET',
     headers: {//'User-Agent': 'Mozilla/5.0', 
               'Content-Type': 'application/json'}
