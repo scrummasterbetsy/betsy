@@ -51,17 +51,18 @@ app.post('/', function (req, res) {
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
    console.log('+++ListItems+++');
+   console.log(assistant.getRawInput());
    let strHeadTail = assistant.getArgument('HeadTail');
    let strListSize = assistant.getArgument('ListSize');
    let strTaskStatus = assistant.getArgument('TaskStatus');
+   console.log(strTaskStatus);
    
+   // Configure the request
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
    if (strTaskStatus) strURL += '+AND+status+in+%28%22'+strTaskStatus+'%22%29';
-
-   console.log(strTaskStatus);
    console.log(strURL);
    
-  // Configure the request
+
   let options = {
     headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
     method: 'GET',
@@ -78,9 +79,8 @@ app.post('/', function (req, res) {
     } // end if
     console.log(response.statusCode); 
     if (!error && response.statusCode == 200) {
-        // Print out the response body
         let strJSON = JSON.parse(body);
-        console.log(strJSON);
+        //console.log(strJSON);
       
         // Prepare output     
         let strOut = ' ';
