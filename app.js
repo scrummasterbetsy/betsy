@@ -54,58 +54,36 @@ app.post('/', function (req, res) {
 
   // Configure the request
   var options = {
-    url: 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY',
-   //authorization : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=',
+    headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
     method: 'GET',
-    headers: {//'User-Agent': 'Mozilla/5.0', 
-              'Authorization' : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=',
-              'Content-Type': 'application/json'}
-    //qs: {'jql': 'project=BETSY'}
+    url: 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY'
   }
 
   // Start the request
+  let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
   request(options, function (error, response, body) {
-    console.log('-------------------------------------------------------------'); 
-    console.log(error);     
+    if (error) {
+      console.log(error);
+        assistant.ask('There was an error in List Itens. '+error +nextPrompt);
+        return;
+    }
     console.log(response.statusCode); 
     if (!error && response.statusCode == 200) {
         // Print out the response body
-        console.log('-------------------------------------------------------------');     
         let strJSON = JSON.parse(body);
         console.log(strJSON);
-        console.log('-------------------------------------------------------------');     
-
+        console.log(strJSON.issues[0].key);
+      
+        // Prepare output     
+        assistant.ask('These are the issues. '+strJSON.issues[0].key +nextPrompt);
+      
+      
+      
     }
   })  // end request 
  }
   ////////////////////////////////////////  
   
- ///////////////////////////////////////////////////////  
- function ListItemsTEST(assistant) {
-   console.log('+++ListItems+++');
-   var url = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
-
-   http.get({'hostname': url,
-             'auth': 'Basic YmV0c3k6QmV0c3lCb3Q4MjI='
-             }, function(res){
-       var body = '';
-
-       res.on('data', function(chunk){
-           body += chunk;
-       });
-
-       res.on('end', function(){
-           var strResponse = JSON.parse(body);
-           console.log("RESPONSE: ", strResponse);
-       });
-   }).on('error', function(e){
-      console.log("ERROR: ", e);
-   }); // end request
-   
-   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
-   assistant.ask('This is the list items intent. '+nextPrompt);
- }
-  ////////////////////////////////////////
          
   let actionMap = new Map();
   actionMap.set('input.settaskstatus', SetTaskStatus);
