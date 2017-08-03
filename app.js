@@ -51,11 +51,13 @@ app.post('/', function (req, res) {
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
    console.log('+++ListItems+++');
-   console.log(assistant.getRawInput());
+   //console.log(assistant.getRawInput());
    let strHeadTail = assistant.getArgument('HeadTail');
    let strListSize = assistant.getArgument('ListSize');
    let strTaskStatus = assistant.getArgument('TaskStatus');
-   console.log(strTaskStatus);
+   console.log('HeadTail '+strHeadTail);
+   console.log('ListSize '+strListSize);
+   console.log('TaskStatus '+strTaskStatus);
    
    // Configure the request
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
