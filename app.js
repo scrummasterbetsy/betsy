@@ -49,21 +49,15 @@ app.post('/', function (req, res) {
  }
 
 ///////////////////////////////////////////////////////  
- function ListItemsOLD(assistant) {
+ function ListItems(assistant) {
    console.log('+++ListItems+++');
-   
-   // Set the headers
-  var headers = {
-    'User-Agent':       'Super Agent/0.0.1',
-    'Content-Type':     'application/json'
-  }
 
   // Configure the request
   var options = {
     url: 'https://projectbetsy.atlassian.net/rest/api/2/search',
     authentication : 'Basic YmV0c3k6QmV0c3lCb3Q4MjI=',
     method: 'GET',
-    headers: headers,
+    headers: {'User-Agent': 'Mozilla/5.0', 'Content-Type':     'application/json'  },
     qs: {'jql': 'project%3DBETSY'}
   }
 
@@ -85,7 +79,7 @@ app.post('/', function (req, res) {
   ////////////////////////////////////////  
   
  ///////////////////////////////////////////////////////  
- function ListItems(assistant) {
+ function ListItemsTEST(assistant) {
    console.log('+++ListItems+++');
    var url = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
 
