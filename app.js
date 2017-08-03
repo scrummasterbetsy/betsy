@@ -66,7 +66,7 @@ app.post('/', function (req, res) {
       console.log(error);
         assistant.ask('There was an error in List Itens. '+error +nextPrompt);
         return;
-    }
+    } // end if
     console.log(response.statusCode); 
     if (!error && response.statusCode == 200) {
         // Print out the response body
@@ -83,10 +83,8 @@ app.post('/', function (req, res) {
         } // end for     
         strOut = strOut + ' Here endeth the issue list.';
         console.log(strOut);
-        assistant.ask(strOut++nextPrompt);
-      
-      
-    }
+        assistant.ask(strOut+nextPrompt);
+    } // end if (!error && response.statusCode == 200)
   })  // end request 
  }
   ////////////////////////////////////////  
