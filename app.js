@@ -5,6 +5,7 @@ let Assistant = require('actions-on-google').ApiAiAssistant;
 let express = require('express');
 let bodyParser = require('body-parser');
 let request = require('request');
+let http = require('http');
 
 let app = express();
 app.use(bodyParser.json({type: 'application/json'}));
