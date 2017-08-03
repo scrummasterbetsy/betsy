@@ -74,7 +74,7 @@ app.post('/', function (req, res) {
         console.log(strJSON);
       
         // Prepare output     
-        var strOut = 'There are a total of '+strJSON.total+' issues: ',
+        var strOut = 'There are a total of '+strJSON.total+' issues: ';
         for (var nInd=0; nInd<strJSON.total; nInd++) { 
            var strIssueName = strJSON.issues[nInd].key;
            var strIssueID = strJSON.issues[nInd].id;
