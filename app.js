@@ -1,6 +1,6 @@
 'use strict';
 
-process.env.DEBUG = 'actions-on-google:*';
+//process.env.DEBUG = 'actions-on-google:*';
 let Assistant = require('actions-on-google').ApiAiAssistant;
 let express = require('express');
 let bodyParser = require('body-parser');
@@ -23,7 +23,7 @@ app.post('/', function (req, res) {
   
  function SetTaskStatus(assistant) {
    console.log('SetTaskStatus');
-   console.log(assistant.getRawInput());
+   //console.log(assistant.getRawInput());
    let TaskID = assistant.getArgument('TaskID');
    let TaskStatus = assistant.getArgument('TaskStatus');
    
@@ -33,7 +33,7 @@ app.post('/', function (req, res) {
   
   function ProcessIssues(assistant) {
    console.log('Issues');
-   console.log(assistant.getRawInput());
+   //console.log(assistant.getRawInput());
    let IssueID = assistant.getArgument('IssueID');
    let Action = assistant.getArgument('Action');
    
@@ -56,13 +56,13 @@ app.post('/', function (req, res) {
    let strTaskStatus = assistant.getArgument('TaskStatus');
    
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
-   if (strTaskStatus != null) strURL += '+AND+status+in+%28%22'+strTaskStatus+'%22%29';
+   if (!strTaskStatus) strURL += '+AND+status+in+%28%22'+strTaskStatus+'%22%29';
 
    console.log(strTaskStatus);
    console.log(strURL);
    
   // Configure the request
-  var options = {
+  let options = {
     headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
     method: 'GET',
     url: strURL
@@ -83,16 +83,21 @@ app.post('/', function (req, res) {
         console.log(strJSON);
       
         // Prepare output     
-        var strOut = 'There are a total of '+strJSON.total+' issues';
+        let strOut = ' ';
+        if (strJSON.total==1) {
+          strOut = 'There is a total of '+strJSON.total+' issue';
+        } else {
+          strOut = 'There are a total of '+strJSON.total+' issues';
+        } // end if
         if (strTaskStatus != null) strOut += ' with Status '+strTaskStatus;
         strOut +=':';
-        for (var nInd=0; nInd<strJSON.total; nInd++) { 
+        for (let nInd=0; nInd<strJSON.total; nInd++) { 
            strOut += ' Issue '+strJSON.issues[nInd].key;
-           strOut += ', I.D. '+strJSON.issues[nInd].id;
-           strOut += ', Status '+strJSON.issues[nInd].fields.status.name;
+           strOut += ', I.D.: '+strJSON.issues[nInd].id;
+           strOut += ', Status: '+strJSON.issues[nInd].fields.status.name;
            strOut += '.';
         } // end for     
-        strOut += strOut + ' Here endeth the issue list.';
+
         //console.log(strOut);
         assistant.ask(strOut+nextPrompt);
     } // end if (!error && response.statusCode == 200)
