@@ -96,9 +96,19 @@ app.post('/', function (req, res) {
       
         let nStart = 0;
         let nEnd = strJSON.total;
-        if (strHeadTail=='first') nEnd = Math.min(nEnd,parseInt(strListSize));
-        if (strHeadTail=='last') nStart = Math.max(nStart,nEnd-parseInt(strListSize));
-        if (strHeadTail=='first' || strHeadTail=='last') strOut += ' These are the '+strHeadTail+' '+parseInt(strListSize)+' items on the list: ';
+        if (strHeadTail=='first' && strListSize) {
+          nEnd = Math.min(nEnd,parseInt(strListSize));
+          strOut += ' These are the '+strHeadTail+' '+parseInt(strListSize)+' items on the list: ';          
+        } else if (strHeadTail=='first') {
+          nEnd = nStart+1;
+          strOut += ' This is the '+strHeadTail+' item on the list: ';          
+        } else if (strHeadTail=='last' && strListSize) {
+          nStart = Math.max(nStart,nEnd-parseInt(strListSize));
+          strOut += ' These are the '+strHeadTail+' '+parseInt(strListSize)+' items on the list: ';          
+        } else if (strHeadTail=='last') {
+          nStart = nEnd-1;
+          strOut += ' This is the '+strHeadTail+' item on the list: ';          
+        } // end
       
         for (let nInd=nStart; nInd<nEnd; nInd++) { 
            strOut += ' Issue '+strJSON.issues[nInd].key;
