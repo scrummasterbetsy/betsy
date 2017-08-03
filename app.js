@@ -56,7 +56,7 @@ app.post('/', function (req, res) {
    let strTaskStatus = assistant.getArgument('TaskStatus');
    
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
-   if (!strTaskStatus) strURL += '+AND+status+in+%28%22'+strTaskStatus+'%22%29';
+   if (strTaskStatus) strURL += '+AND+status+in+%28%22'+strTaskStatus+'%22%29';
 
    console.log(strTaskStatus);
    console.log(strURL);
@@ -89,7 +89,7 @@ app.post('/', function (req, res) {
         } else {
           strOut = 'There are a total of '+strJSON.total+' issues';
         } // end if
-        if (strTaskStatus != null) strOut += ' with Status '+strTaskStatus;
+        if (strTaskStatus) strOut += ' with Status '+strTaskStatus;
         strOut +=':';
         for (let nInd=0; nInd<strJSON.total; nInd++) { 
            strOut += ' Issue '+strJSON.issues[nInd].key;
