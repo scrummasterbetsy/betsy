@@ -58,6 +58,9 @@ app.post('/', function (req, res) {
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
    if (strTaskStatus != null) strURL += '+AND+status+in+%28%22'+strTaskStatus+'%22%29';
 
+   console.log(strTaskStatus);
+   console.log(strURL);
+   
   // Configure the request
   var options = {
     headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
@@ -84,12 +87,12 @@ app.post('/', function (req, res) {
         if (strTaskStatus != null) strOut += ' with Status '+strTaskStatus;
         strOut +=':';
         for (var nInd=0; nInd<strJSON.total; nInd++) { 
-           strOut = strOut + ' Issue '+strJSON.issues[nInd].key;
-           strOut = strOut + ', ID '+strJSON.issues[nInd].id;
-           strOut = strOut + ', Status '+strJSON.issues[nInd].fields.status.name;
-           strOut = strOut + '.';
+           strOut += ' Issue '+strJSON.issues[nInd].key;
+           strOut += ', ID '+strJSON.issues[nInd].id;
+           strOut += ', Status '+strJSON.issues[nInd].fields.status.name;
+           strOut += '.';
         } // end for     
-        strOut = strOut + ' Here endeth the issue list.';
+        strOut += strOut + ' Here endeth the issue list.';
         //console.log(strOut);
         assistant.ask(strOut+nextPrompt);
     } // end if (!error && response.statusCode == 200)
