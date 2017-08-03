@@ -87,9 +87,11 @@ app.post('/', function (req, res) {
  ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
    console.log('+++ListItems+++');
-   var url = 'http://graph.facebook.com/517267866/?fields=picture';
+   var url = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
 
-   http.get(url, function(res){
+   http.get({'hostname': url,
+             'auth': 'Basic YmV0c3k6QmV0c3lCb3Q4MjI='
+             }, function(res){
        var body = '';
 
        res.on('data', function(chunk){
@@ -97,11 +99,11 @@ app.post('/', function (req, res) {
        });
 
        res.on('end', function(){
-           var fbResponse = JSON.parse(body);
-           console.log("Got a response: ", fbResponse.picture);
+           var strResponse = JSON.parse(body);
+           console.log("RESPONSE: ", strResponse);
        });
    }).on('error', function(e){
-      console.log("Got an error: ", e);
+      console.log("ERROR: ", e);
    }); // end request
    
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
