@@ -55,8 +55,8 @@ app.post('/', function (req, res) {
    let strListSize = assistant.getArgument('ListSize');
    let strTaskStatus = assistant.getArgument('TaskStatus');
    
-   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY;
-   if (strTaskStatus != null) strURL += '+AND+status+in+%28%22'++'%22%29';
+   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
+   if (strTaskStatus != null) strURL += '+AND+status+in+%28%22'+strTaskStatus+'%22%29';
 
   // Configure the request
   var options = {
