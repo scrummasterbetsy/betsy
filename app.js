@@ -51,12 +51,18 @@ app.post('/', function (req, res) {
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
    console.log('+++ListItems+++');
+   let strHeadTail = assistant.getArgument('HeadTail');
+   let strListSize = assistant.getArgument('ListSize');
+   let strTaskStatus = assistant.getArgument('TaskStatus');
+   
+   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY;
+   if (strTaskStatus != null) strURL += '+AND+status+in+%28%22'++'%22%29';
 
   // Configure the request
   var options = {
     headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
     method: 'GET',
-    url: 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY'
+    url: strURL
   }
 
   // Start the request
@@ -74,7 +80,9 @@ app.post('/', function (req, res) {
         console.log(strJSON);
       
         // Prepare output     
-        var strOut = 'There are a total of '+strJSON.total+' issues: ';
+        var strOut = 'There are a total of '+strJSON.total+' issues';
+        if (strTaskStatus != null) strOut += ' with Status '+strTaskStatus;
+        strOut +=':';
         for (var nInd=0; nInd<strJSON.total; nInd++) { 
            strOut = strOut + ' Issue '+strJSON.issues[nInd].key;
            strOut = strOut + ', ID '+strJSON.issues[nInd].id;
