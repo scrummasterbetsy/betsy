@@ -16,10 +16,10 @@ app.post('/', function (req, res) {
   //console.log('Request headers: ' + JSON.stringify(req.headers));
   //console.log('Request body: ' + JSON.stringify(req.body));
  
- const Prompts = new Array("What else can I do for you?", 
-                          "Is there anything else you want me to do?",
-                          "What other changes do you want to make?",
-                          "Anything else?");
+ const Prompts = new Array("\nWhat else can I do for you?", 
+                          "\nIs there anything else you want me to do?",
+                          "\nWhat fo you want to do?",
+                          "\nAnything else?");
   
  function SetTaskStatus(assistant) {
    console.log('SetTaskStatus');
