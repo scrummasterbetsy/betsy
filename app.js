@@ -82,22 +82,24 @@ app.post('/', function (req, res) {
    
   //////// Now modify the status
   let strModify = ' ';
-  if (strStatusCur=='To Do' && strStatusTarget=='In Progress') {
-    strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"351"}';
-  } else if (strStatusCur=='To Do' && strStatusTarget=='Done') {
+  strStatusCur = strStatusCur.toUpperCase();
+  strStatusTarget = strStatusTarget.toUpperCase();
+  if (strStatusCur=='TO DO' && strStatusTarget=='IN PROGRESS') {
+    strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"351"}';   
+  } else if (strStatusCur=='TO DO' && strStatusTarget=='DONE') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been cancelled."}}]},"transition":{"id":"411"}';
-  } else if (strStatusCur=='In Progress' && strStatusTarget=='To Do') {
+  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='TO DO') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"371"}';
-  } else if (strStatusCur=='In Progress' && strStatusTarget=='Done') {
+  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='DONE') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been completed."}}]},"transition":{"id":"421"}';
-  } else if (strStatusCur=='In Progress' && strStatusTarget=='Blocked') {
+  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='BLOCKED') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been blocked."}}]},"transition":{"id":"431"}';
-  } else if (strStatusCur=='Blocked' && strStatusTarget=='In Progress') {
+  } else if (strStatusCur=='BLOCKED' && strStatusTarget=='IN PROGRESS') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"401"}';
-  } else if (strStatusCur=='Done' && strStatusTarget=='To Do') {
+  } else if (strStatusCur=='DONE' && strStatusTarget=='TO DO') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been reopened."}}]},"transition":{"id":"361"}';
   } else if (strStatusCur==strStatusTarget) {
-      assistant.ask('The current status of'+strProjectID+'-'+strIssueID+' is already '+strStatusCur+'. No need for a change.'+nextPrompt);
+      assistant.ask('The current status of'+strProjectID+'-'+strIssueID+' is already set to '+strStatusCur+'. No need for a change.'+nextPrompt);
       return;
   } else {
       assistant.ask('Error: Transition from'+strStatusCur+' to '+strStatusTarget+'not defined.'+nextPrompt);
