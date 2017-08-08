@@ -28,7 +28,6 @@ app.post('/', function (req, res) {
  }
 
 ///////////////////////////////////////////////////////  
- var strStatusCur = ' ' ;
  function ChangeIssueStatus(assistant) {
    console.log('+++ChangeItemStatus+++');
    console.log(assistant.getRawInput());
@@ -43,7 +42,6 @@ app.post('/', function (req, res) {
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
    
    // Find current status
-   // Configure the request
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY+AND+issueKey%3D'+strProjectID+'-'+strIssueID;
    console.log(strURL);
    let options = {
@@ -51,8 +49,7 @@ app.post('/', function (req, res) {
      method: 'GET',
      url: strURL
    }
-
-  // Start the request
+  // Start the Find current status request
   request(options, function (error, response, body) {
     if (error) {
       console.log(error);
@@ -64,10 +61,67 @@ app.post('/', function (req, res) {
         let strJSON = JSON.parse(body);
         console.log(strJSON);
         if (strJSON.total==1) {
+          var strStatusCur = ' ' ;
           strStatusCur = strJSON.issues[0].fields.status.name;
           strOut = 'Current status of '+strProjectID+'-'+strIssueID+' is '+strStatusCur;
           console.log(strOut);
-        } else {
+
+   		  //////// Now modify the status
+		  console.log('START MODIFY');
+		  let strModify = ' ';
+		  strStatusCur = strStatusCur.toUpperCase();
+		  strStatusTarget = strStatusTarget.toUpperCase();
+		  if (strStatusCur=='TO DO' && strStatusTarget=='IN PROGRESS') {
+			strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"351"}';   
+		  } else if (strStatusCur=='TO DO' && strStatusTarget=='DONE') {
+			strModify = '"update":{"comment":[{"add":{"body":"Work has been cancelled."}}]},"transition":{"id":"411"}';
+		  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='TO DO') {
+			strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"371"}';
+		  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='DONE') {
+			strModify = '"update":{"comment":[{"add":{"body":"Work has been completed."}}]},"transition":{"id":"421"}';
+		  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='BLOCKED') {
+			strModify = '"update":{"comment":[{"add":{"body":"Work has been blocked."}}]},"transition":{"id":"431"}';
+		  } else if (strStatusCur=='BLOCKED' && strStatusTarget=='IN PROGRESS') {
+			strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"401"}';
+		  } else if (strStatusCur=='DONE' && strStatusTarget=='TO DO') {
+			strModify = '"update":{"comment":[{"add":{"body":"Work has been reopened."}}]},"transition":{"id":"361"}';
+		  } else if (strStatusCur==strStatusTarget) {
+			  assistant.ask('The current status of'+strProjectID+'-'+strIssueID+' is already set to '+strStatusCur+'. No need for a change.'+nextPrompt);
+			  return;
+		  } else {
+			  assistant.ask('Error: Transition from'+strStatusCur+' to '+strStatusTarget+'not defined.'+nextPrompt);
+			  return;
+		  } // end if
+			
+		   strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/'+strProjectID+'-'+strIssueID+'/transitions?expand=transitions.fields';
+		   console.log(strURL);
+		   
+		  options = {
+			headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
+			method: 'POST',
+			url: strURL,
+			json: { strModify }
+		  }
+
+		  // Start the request
+		  request(options, function (error, response, body) {
+			if (error) {
+			  console.log(error);
+				assistant.ask('There was an error in Change Issue Status. '+error +nextPrompt);
+				return;
+			} // end if
+			console.log(response.statusCode); 
+			if (!error && response.statusCode == 200) {
+			   let strJSON = JSON.parse(body);
+			   console.log(strJSON);
+			   assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
+		   } else {
+			  assistant.ask('There was an error in the execution of ChangeIssueStatus.'+nextPrompt);
+			  return;
+			} // end if (!error && response.statusCode == 200)
+		  })  // end request
+
+		} else {
            strOut = 'No issue with name '+strProjectID+'-'+strIssueID+' found. ';
            assistant.ask(strOut+nextPrompt);
            return;
@@ -78,61 +132,6 @@ app.post('/', function (req, res) {
     } // end if (!error && response.statusCode == 200)
   })  // end request
 
-   
-  //////// Now modify the status
-  console.log('START MODIFY');
-  let strModify = ' ';
-  strStatusCur = strStatusCur.toUpperCase();
-  strStatusTarget = strStatusTarget.toUpperCase();
-  if (strStatusCur=='TO DO' && strStatusTarget=='IN PROGRESS') {
-    strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"351"}';   
-  } else if (strStatusCur=='TO DO' && strStatusTarget=='DONE') {
-    strModify = '"update":{"comment":[{"add":{"body":"Work has been cancelled."}}]},"transition":{"id":"411"}';
-  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='TO DO') {
-    strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"371"}';
-  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='DONE') {
-    strModify = '"update":{"comment":[{"add":{"body":"Work has been completed."}}]},"transition":{"id":"421"}';
-  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='BLOCKED') {
-    strModify = '"update":{"comment":[{"add":{"body":"Work has been blocked."}}]},"transition":{"id":"431"}';
-  } else if (strStatusCur=='BLOCKED' && strStatusTarget=='IN PROGRESS') {
-    strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"401"}';
-  } else if (strStatusCur=='DONE' && strStatusTarget=='TO DO') {
-    strModify = '"update":{"comment":[{"add":{"body":"Work has been reopened."}}]},"transition":{"id":"361"}';
-  } else if (strStatusCur==strStatusTarget) {
-      assistant.ask('The current status of'+strProjectID+'-'+strIssueID+' is already set to '+strStatusCur+'. No need for a change.'+nextPrompt);
-      return;
-  } else {
-      assistant.ask('Error: Transition from'+strStatusCur+' to '+strStatusTarget+'not defined.'+nextPrompt);
-      return;
-  } // end if
-    
-   strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/'+strProjectID+'-'+strIssueID+'/transitions?expand=transitions.fields';
-   console.log(strURL);
-   
-  options = {
-    headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
-    method: 'POST',
-    url: strURL,
-    json: { strModify }
-  }
-
-  // Start the request
-  request(options, function (error, response, body) {
-    if (error) {
-      console.log(error);
-        assistant.ask('There was an error in Change Issue Status. '+error +nextPrompt);
-        return;
-    } // end if
-    console.log(response.statusCode); 
-    if (!error && response.statusCode == 200) {
-       let strJSON = JSON.parse(body);
-       console.log(strJSON);
-       assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
-   } else {
-      assistant.ask('There was an error in the execution of ChangeIssueStatus.'+nextPrompt);
-      return;
-    } // end if (!error && response.statusCode == 200)
-  })  // end request
  } // end ChangeIssueStatus
   
   
