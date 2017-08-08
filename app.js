@@ -5,7 +5,6 @@ let Assistant = require('actions-on-google').ApiAiAssistant;
 let express = require('express');
 let bodyParser = require('body-parser');
 let request = require('request');
-//let http = require('http');
 
 let app = express();
 app.use(bodyParser.json({type: 'application/json'}));
@@ -29,6 +28,7 @@ app.post('/', function (req, res) {
  }
 
 ///////////////////////////////////////////////////////  
+ var strStatusCur = ' ' ;
  function ChangeIssueStatus(assistant) {
    console.log('+++ChangeItemStatus+++');
    console.log(assistant.getRawInput());
@@ -38,7 +38,7 @@ app.post('/', function (req, res) {
    console.log('ProjectID '+strProjectID);
    console.log('IssueID '+strIssueID);
    console.log('StatusTarget '+strStatusTarget);
-   var strStatusCur = ' ' ;
+
    let strOut = ' ';
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
    
