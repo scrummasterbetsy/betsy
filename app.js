@@ -43,7 +43,7 @@ app.post('/', function (req, res) {
    
    // Find current status
    // Configure the request
-   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/'+strProjectID+'-'+strIssueID+'/transitions?expand=transitions.fields';
+   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY+AND+issueKey%3D'+strProjectID+'-'+strIssueID+;
    console.log(strURL);
    
 
