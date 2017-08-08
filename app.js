@@ -239,7 +239,7 @@ app.post('/', function (req, res) {
         let strOut = ' ';
 	for (var key in strJSON) {
            strOut += ' \nUser '+key+': '+strJSON[key].displayName;
-           strOut += ' I.D.: '+strJSON[key].name;
+         //  strOut += ' I.D.: '+strJSON[key].name; // these are the IDs used in Jira
         } // end for     
         strOut += '.';
 
