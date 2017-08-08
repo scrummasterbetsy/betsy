@@ -80,6 +80,7 @@ app.post('/', function (req, res) {
 
    
   //////// Now modify the status
+  console.log('START MODIFY');
   let strModify = ' ';
   strStatusCur = strStatusCur.toUpperCase();
   strStatusTarget = strStatusTarget.toUpperCase();
