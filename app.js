@@ -112,11 +112,11 @@ app.post('/', function (req, res) {
 				return;
 			} // end if
 			console.log(response.statusCode); 
-			if (!error && response.statusCode == 200) {
+			if (!error && (response.statusCode == 200 || response.statusCode == 204)) {
 			   let strJSON = JSON.parse(body);
 			   console.log(strJSON);
 			   assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
-		   } else {
+		   	} else {
 			  assistant.ask('There was an error in the execution of ChangeIssueStatus.'+nextPrompt);
 			  return;
 			} // end if (!error && response.statusCode == 200)
