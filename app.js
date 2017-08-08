@@ -32,8 +32,10 @@ app.post('/', function (req, res) {
  function ChangeIssueStatus(assistant) {
    console.log('+++ChangeItemStatus+++');
    console.log(assistant.getRawInput());
+   let strProjectID = assistant.getArgument('ProjectID');
    let strIssueID = assistant.getArgument('IssueID');
    let strStatusTarget = assistant.getArgument('TaskStatus');
+   console.log('ProjectID '+strProjectID);
    console.log('IssueID '+strIssueID);
    console.log('StatusTarget '+strStatusTarget);
    let strStatusCur = ' ' ;
@@ -41,7 +43,7 @@ app.post('/', function (req, res) {
    
    // Find current status
    // Configure the request
-   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/'+strIssueID.split(' ').join('-')+'/transitions?expand=transitions.fields';
+   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/'+strProjectID+'-'+strIssueID+'/transitions?expand=transitions.fields';
    console.log(strURL);
    
 
@@ -65,9 +67,9 @@ app.post('/', function (req, res) {
         //console.log(strJSON);
         if (strJSON.total==1) {
           strStatusCur = strJSON.issues[0].fields.status.name;
-          strOut = 'Current status of '+strIssueID+' is '+strStatusCur;
+          strOut = 'Current status of '+strProjectID+'-'+strIssueID+' is '+strStatusCur;
         } else {
-           strOut = 'No issue with name '+strIssueID+' found. ';
+           strOut = 'No issue with name '+strProjectID+'-'+strIssueID+' found. ';
         };
 
         //console.log(strOut);
