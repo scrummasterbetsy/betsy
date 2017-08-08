@@ -66,7 +66,7 @@ app.post('/', function (req, res) {
         if (strJSON.total==1) {
           strStatusCur = strJSON.issues[0].fields.status.name;
           strOut = 'Current status of '+strProjectID+'-'+strIssueID+' is '+strStatusCur;
-          console.log(strJSON);
+          console.log(strOut);
         } else {
            strOut = 'No issue with name '+strProjectID+'-'+strIssueID+' found. ';
            assistant.ask(strOut+nextPrompt);
