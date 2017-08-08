@@ -61,30 +61,30 @@ app.post('/', function (req, res) {
         let strJSON = JSON.parse(body);
         console.log(strJSON);
         if (strJSON.total==1) {
-          var strStatusCur = ' ' ;
+          let strStatusCur = ' ' ;
           strStatusCur = strJSON.issues[0].fields.status.name;
           strOut = 'Current status of '+strProjectID+'-'+strIssueID+' is '+strStatusCur;
           console.log(strOut);
 
    		  //////// Now modify the status
 		  console.log('START MODIFY');
-		  let strModify = ' ';
+		  let objModify = {};
 		  strStatusCur = strStatusCur.toUpperCase();
 		  strStatusTarget = strStatusTarget.toUpperCase();
 		  if (strStatusCur=='TO DO' && strStatusTarget=='IN PROGRESS') {
-			strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"351"}';   
+			objModify = {"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"351"}};   
 		  } else if (strStatusCur=='TO DO' && strStatusTarget=='DONE') {
-			strModify = '"update":{"comment":[{"add":{"body":"Work has been cancelled."}}]},"transition":{"id":"411"}';
+			objModify = {"update":{"comment":[{"add":{"body":"Work has been cancelled."}}]},"transition":{"id":"411"}};
 		  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='TO DO') {
-			strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"371"}';
+			objModify = {"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"371"}};
 		  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='DONE') {
-			strModify = '"update":{"comment":[{"add":{"body":"Work has been completed."}}]},"transition":{"id":"421"}';
+			objModify = {"update":{"comment":[{"add":{"body":"Work has been completed."}}]},"transition":{"id":"421"}};
 		  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='BLOCKED') {
-			strModify = '"update":{"comment":[{"add":{"body":"Work has been blocked."}}]},"transition":{"id":"431"}';
+			objModify = {"update":{"comment":[{"add":{"body":"Work has been blocked."}}]},"transition":{"id":"431"}};
 		  } else if (strStatusCur=='BLOCKED' && strStatusTarget=='IN PROGRESS') {
-			strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"401"}';
+			objModify = {"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"401"}};
 		  } else if (strStatusCur=='DONE' && strStatusTarget=='TO DO') {
-			strModify = '"update":{"comment":[{"add":{"body":"Work has been reopened."}}]},"transition":{"id":"361"}';
+			objModify = {"update":{"comment":[{"add":{"body":"Work has been reopened."}}]},"transition":{"id":"361"}};
 		  } else if (strStatusCur==strStatusTarget) {
 			  assistant.ask('The current status of'+strProjectID+'-'+strIssueID+' is already set to '+strStatusCur+'. No need for a change.'+nextPrompt);
 			  return;
@@ -100,7 +100,7 @@ app.post('/', function (req, res) {
 			headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
 			method: 'POST',
 			url: strURL,
-			json: strModify
+			json: objModify
 		  }
 		  console.log(options);
 
