@@ -102,6 +102,7 @@ app.post('/', function (req, res) {
 			url: strURL,
 			json: { strModify }
 		  }
+		  console.log(options);
 
 		  // Start the request
 		  request(options, function (error, response, body) {
