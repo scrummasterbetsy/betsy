@@ -40,7 +40,6 @@ app.post('/', function (req, res) {
    console.log('StatusTarget '+strStatusTarget);
    let strStatusCur = ' ' ;
    let strOut = ' ';
-   let bContinue = false;
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
    
    // Find current status
@@ -63,11 +62,11 @@ app.post('/', function (req, res) {
     console.log(response.statusCode); 
     if (!error && response.statusCode == 200) {
         let strJSON = JSON.parse(body);
-        //console.log(strJSON);
+        console.log(strJSON);
         if (strJSON.total==1) {
           strStatusCur = strJSON.issues[0].fields.status.name;
           strOut = 'Current status of '+strProjectID+'-'+strIssueID+' is '+strStatusCur;
-          bContinue = true;
+          console.log(strJSON);
         } else {
            strOut = 'No issue with name '+strProjectID+'-'+strIssueID+' found. ';
            assistant.ask(strOut+nextPrompt);
