@@ -17,7 +17,7 @@ app.post('/', function (req, res) {
  
  const Prompts = new Array("\nWhat else can I do for you?", 
                           "\nIs there anything else you want me to do?",
-                          "\nWhat else you want to do?",
+                          "\nWhat else do you want to do?",
                           "\nAnything else?");
  
   
