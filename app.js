@@ -112,7 +112,7 @@ app.post('/', function (req, res) {
 				return;
 			} // end if
 			console.log(response.statusCode); 
-			if (!error && (response.statusCode == 200 || response.statusCode == 204)) {
+			if (!error && response.statusCode >= 200 && response.statusCode <=299) { // all 2xx codes are OK
 			   let strJSON = JSON.parse(body);
 			   console.log(strJSON);
 			   assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
