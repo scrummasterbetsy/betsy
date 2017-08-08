@@ -20,27 +20,7 @@ app.post('/', function (req, res) {
                           "\nIs there anything else you want me to do?",
                           "\nWhat fo you want to do?",
                           "\nAnything else?");
-  
- function SetTaskStatus(assistant) {
-   console.log('SetTaskStatus');
-   //console.log(assistant.getRawInput());
-   let TaskID = assistant.getArgument('TaskID');
-   let TaskStatus = assistant.getArgument('TaskStatus');
-   
-   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
-   assistant.ask('I have updated Task '+TaskID+' to '+TaskStatus+'. '+nextPrompt);
- }
-  
-  function ProcessIssues(assistant) {
-   console.log('Issues');
-   //console.log(assistant.getRawInput());
-   let IssueID = assistant.getArgument('IssueID');
-   let Action = assistant.getArgument('Action');
-   
-   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
-   assistant.ask('I have updated Issue '+IssueID+' with the action '+Action+'. '+nextPrompt);
- }
-  
+ 
   
  function UserStories(assistant) {
    console.log('UserStories');
@@ -48,6 +28,53 @@ app.post('/', function (req, res) {
    assistant.ask('This is the user story intent. '+nextPrompt);
  }
 
+///////////////////////////////////////////////////////  
+ function ChangeIssueStatus(assistant) {
+   console.log('+++ChangeItemStatus+++');
+   console.log(assistant.getRawInput());
+   let strIssueID = assistant.getArgument('IssueID');
+   let strStatusTarget = assistant.getArgument('TaskStatus');
+   console.log('IssueID '+strIssueID);
+   console.log('StatusTarget '+strStatusTarget);
+   let strStatusCur = ' ' ;
+   let strOut = ' ';
+   
+   // Find current status
+   // Configure the request
+   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/'+strIssueID.split(' ').join('-')+'/transitions?expand=transitions.fields';
+   console.log(strURL);
+   
+
+  let options = {
+    headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
+    method: 'GET',
+    url: strURL
+  }
+
+  // Start the request
+  let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
+  request(options, function (error, response, body) {
+    if (error) {
+      console.log(error);
+        assistant.ask('There was an error in List Itens. '+error +nextPrompt);
+        return;
+    } // end if
+    console.log(response.statusCode); 
+    if (!error && response.statusCode == 200) {
+        let strJSON = JSON.parse(body);
+        //console.log(strJSON);
+        if (strJSON.total==1) {
+          strStatusCur = strJSON.issues[0].fields.status.name;
+          strOut = 'Current status of '+strIssueID+' is '+strStatusCur;
+        } else {
+           strOut = 'No issue with name '+strIssueID+' found. ';
+        };
+
+        //console.log(strOut);
+        assistant.ask(strOut+nextPrompt);
+    } // end if (!error && response.statusCode == 200)
+  })  // end request 
+ }
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
    console.log('+++ListItems+++');
@@ -126,9 +153,8 @@ app.post('/', function (req, res) {
   
          
   let actionMap = new Map();
-  actionMap.set('input.settaskstatus', SetTaskStatus);
-  actionMap.set('input.issues', ProcessIssues);
   actionMap.set('input.userstories', UserStories);
+  actionMap.set('input.changeissuestatus', ChangeIssueStatus);
   actionMap.set('input.listitems', ListItems);
   assistant.handleRequest(actionMap);
 
