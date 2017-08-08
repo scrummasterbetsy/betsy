@@ -209,14 +209,51 @@ app.post('/', function (req, res) {
         assistant.ask(strOut+nextPrompt);
     } // end if (!error && response.statusCode == 200)
   })  // end request 
- }
-  ////////////////////////////////////////  
+ } // end ListItems
+
+///////////////////////////////////////////////////////  
+ function ListUsers(assistant) {
+   console.log('+++ListUsers+++');
+  let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
+   
+   // Configure the request
+  let options = {
+    headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
+    method: 'GET',
+    url:  'https://projectbetsy.atlassian.net/rest/api/2/user/assignable/search?project=BETSY'
+  }
+
+  // Start the request
+  request(options, function (error, response, body) {
+    if (error) {
+      console.log(error);
+        assistant.ask('There was an error in List Itens. '+error +nextPrompt);
+        return;
+    } // end if
+    console.log(response.statusCode); 
+    if (!error && response.statusCode == 200) {
+        let strJSON = JSON.parse(body);
+        //console.log(strJSON);
+      
+        // Prepare output 
+        let strOut = ' ';
+	for (var key in strJSON) {
+           strOut += ' \nUser '+key+': '+strJSON[key].name;
+        } // end for     
+        strOut += '.';
+
+        //console.log(strOut);
+        assistant.ask(strOut+nextPrompt);
+    } // end if (!error && response.statusCode == 200)
+  })  // end request 
+ } // end ListUsers
   
          
   let actionMap = new Map();
   actionMap.set('input.userstories', UserStories);
   actionMap.set('input.changeissuestatus', ChangeIssueStatus);
   actionMap.set('input.listitems', ListItems);
+  actionMap.set('input.listusers', ListUsers);	
   assistant.handleRequest(actionMap);
 
 });
