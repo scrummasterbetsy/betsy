@@ -18,7 +18,7 @@ app.post('/', function (req, res) {
  
  const Prompts = new Array("\nWhat else can I do for you?", 
                           "\nIs there anything else you want me to do?",
-                          "\nWhat fo you want to do?",
+                          "\nWhat else you want to do?",
                           "\nAnything else?");
  
   
@@ -40,21 +40,20 @@ app.post('/', function (req, res) {
    console.log('StatusTarget '+strStatusTarget);
    let strStatusCur = ' ' ;
    let strOut = ' ';
+   let bContinue = false;
+   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
    
    // Find current status
    // Configure the request
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY+AND+issueKey%3D'+strProjectID+'-'+strIssueID;
    console.log(strURL);
-   
-
-  let options = {
-    headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
-    method: 'GET',
-    url: strURL
-  }
+   let options = {
+     headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
+     method: 'GET',
+     url: strURL
+   }
 
   // Start the request
-  let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
   request(options, function (error, response, body) {
     if (error) {
       console.log(error);
@@ -68,15 +67,73 @@ app.post('/', function (req, res) {
         if (strJSON.total==1) {
           strStatusCur = strJSON.issues[0].fields.status.name;
           strOut = 'Current status of '+strProjectID+'-'+strIssueID+' is '+strStatusCur;
+          bContinue = true;
         } else {
            strOut = 'No issue with name '+strProjectID+'-'+strIssueID+' found. ';
-        };
-
-        //console.log(strOut);
-        assistant.ask(strOut+nextPrompt);
+           assistant.ask(strOut+nextPrompt);
+           return;
+        }
+    } else {
+      assistant.ask('There was an error in the execution of ChangeIssueStatus.'+nextPrompt);
+      return;
     } // end if (!error && response.statusCode == 200)
-  })  // end request 
- }
+  })  // end request
+
+   
+  //////// Now modify the status
+  let strModify = ' ';
+  if (strStatusCur=='To Do' and strStatusTarget=='In Progress') {
+    strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"351"}';
+  } else if (strStatusCur=='To Do' and strStatusTarget=='Done') {
+    strModify = '"update":{"comment":[{"add":{"body":"Work has been cancelled."}}]},"transition":{"id":"411"}';
+  } else if (strStatusCur=='In Progress' and strStatusTarget=='To Do') {
+    strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"371"}';
+  } else if (strStatusCur=='In Progress' and strStatusTarget=='Done') {
+    strModify = '"update":{"comment":[{"add":{"body":"Work has been completed."}}]},"transition":{"id":"421"}';
+  } else if (strStatusCur=='In Progress' and strStatusTarget=='Blocked') {
+    strModify = '"update":{"comment":[{"add":{"body":"Work has been blocked."}}]},"transition":{"id":"431"}';
+  } else if (strStatusCur=='Blocked' and strStatusTarget=='In Progress') {
+    strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"401"}';
+  } else if (strStatusCur=='Done' and strStatusTarget=='To Do') {
+    strModify = '"update":{"comment":[{"add":{"body":"Work has been reopened."}}]},"transition":{"id":"361"}';
+  } else if (strStatusCur==strStatusTarget) {
+      assistant.ask('The current status of'+strProjectID+'-'+strIssueID+' is already '+strStatusCur+'. No need for a change.'+nextPrompt);
+      return;
+  } else {
+      assistant.ask('Error: Transition from'+strStatusCur+' to '+strStatusTarget+'not defined.'+nextPrompt);
+      return;
+  } // end if
+    
+   strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/'+strProjectID+'-'+strIssueID+'/transitions?expand=transitions.fields';
+   console.log(strURL);
+   
+  options = {
+    headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
+    method: 'POST',
+    url: strURL,
+    json: { strModify };
+  }
+
+  // Start the request
+  request(options, function (error, response, body) {
+    if (error) {
+      console.log(error);
+        assistant.ask('There was an error in Change Issue Status. '+error +nextPrompt);
+        return;
+    } // end if
+    console.log(response.statusCode); 
+    if (!error && response.statusCode == 200) {
+       let strJSON = JSON.parse(body);
+       console.log(strJSON);
+       assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
+   } else {
+      assistant.ask('There was an error in the execution of ChangeIssueStatus.'+nextPrompt);
+      return;
+    } // end if (!error && response.statusCode == 200)
+  })  // end request
+ } // end ChangeIssueStatus
+  
+  
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
    console.log('+++ListItems+++');
@@ -141,7 +198,7 @@ app.post('/', function (req, res) {
       
         for (let nInd=nStart; nInd<nEnd; nInd++) { 
            strOut += ' \nIssue '+strJSON.issues[nInd].key;
-           strOut += ', I.D.: '+strJSON.issues[nInd].id;
+          // strOut += ', I.D.: '+strJSON.issues[nInd].id;
            strOut += ', Status: '+strJSON.issues[nInd].fields.status.name;
            strOut += '.';
         } // end for     
