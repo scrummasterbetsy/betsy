@@ -82,19 +82,19 @@ app.post('/', function (req, res) {
    
   //////// Now modify the status
   let strModify = ' ';
-  if (strStatusCur=='To Do' and strStatusTarget=='In Progress') {
+  if (strStatusCur=='To Do' && strStatusTarget=='In Progress') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"351"}';
-  } else if (strStatusCur=='To Do' and strStatusTarget=='Done') {
+  } else if (strStatusCur=='To Do' && strStatusTarget=='Done') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been cancelled."}}]},"transition":{"id":"411"}';
-  } else if (strStatusCur=='In Progress' and strStatusTarget=='To Do') {
+  } else if (strStatusCur=='In Progress' && strStatusTarget=='To Do') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"371"}';
-  } else if (strStatusCur=='In Progress' and strStatusTarget=='Done') {
+  } else if (strStatusCur=='In Progress' && strStatusTarget=='Done') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been completed."}}]},"transition":{"id":"421"}';
-  } else if (strStatusCur=='In Progress' and strStatusTarget=='Blocked') {
+  } else if (strStatusCur=='In Progress' && strStatusTarget=='Blocked') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been blocked."}}]},"transition":{"id":"431"}';
-  } else if (strStatusCur=='Blocked' and strStatusTarget=='In Progress') {
+  } else if (strStatusCur=='Blocked' && strStatusTarget=='In Progress') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"401"}';
-  } else if (strStatusCur=='Done' and strStatusTarget=='To Do') {
+  } else if (strStatusCur=='Done' && strStatusTarget=='To Do') {
     strModify = '"update":{"comment":[{"add":{"body":"Work has been reopened."}}]},"transition":{"id":"361"}';
   } else if (strStatusCur==strStatusTarget) {
       assistant.ask('The current status of'+strProjectID+'-'+strIssueID+' is already '+strStatusCur+'. No need for a change.'+nextPrompt);
