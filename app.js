@@ -100,7 +100,7 @@ app.post('/', function (req, res) {
 			headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
 			method: 'POST',
 			url: strURL,
-			json: { strModify }
+			json: strModify
 		  }
 		  console.log(options);
 
