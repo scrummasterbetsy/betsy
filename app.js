@@ -238,7 +238,8 @@ app.post('/', function (req, res) {
         // Prepare output 
         let strOut = ' ';
 	for (var key in strJSON) {
-           strOut += ' \nUser '+key+': '+strJSON[key].name;
+           strOut += ' \nUser '+key+': '+strJSON[key].displayName;
+           strOut += ' I.D.: '+strJSON[key].name;
         } // end for     
         strOut += '.';
 
