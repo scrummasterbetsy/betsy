@@ -113,9 +113,7 @@ app.post('/', function (req, res) {
 			} // end if
 			console.log('Modify status code: '+response.statusCode); 
 			if (!error && response.statusCode >= 200 && response.statusCode <=299) { // all 2xx codes are OK
-			   console.log(body);
-			   let strJSON = JSON.parse(body);
-			   console.log(strJSON);
+			   // NO BODY console.log(body);
 			   assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
 		   	} else {
 			  assistant.ask('There was an error in the execution of ChangeIssueStatus.'+nextPrompt);
