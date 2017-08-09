@@ -6,6 +6,8 @@ let express = require('express');
 let bodyParser = require('body-parser');
 let request = require('request');
 
+let userstories = require('./userstories.js');
+
 let app = express();
 app.use(bodyParser.json({type: 'application/json'}));
 
@@ -21,7 +23,7 @@ app.post('/', function (req, res) {
                           "\nAnything else?");
  
   
- function UserStories(assistant) {
+ function UserStoriesOLD(assistant) {
    console.log('UserStories');
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
    assistant.ask('This is the user story intent. '+nextPrompt);
@@ -411,7 +413,7 @@ app.post('/', function (req, res) {
   
          
   let actionMap = new Map();
-  actionMap.set('input.userstories', UserStories);
+  actionMap.set('input.userstories', userstories.UserStories);
   actionMap.set('input.issuecomment', IssueComment);
   actionMap.set('input.issueassign', IssueAssign);
   actionMap.set('input.changeissuestatus', ChangeIssueStatus);	
