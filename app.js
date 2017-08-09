@@ -151,7 +151,7 @@ app.post('/', function (req, res) {
 		   
 		  options = {
 			headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
-			method: 'POST',
+			method: 'PUT',
 			url: strURL,
 			json: objAssignee
 		  }
