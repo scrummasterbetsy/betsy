@@ -111,8 +111,9 @@ app.post('/', function (req, res) {
 				assistant.ask('There was an error in Change Issue Status. '+error +nextPrompt);
 				return;
 			} // end if
-			console.log(response.statusCode); 
+			console.log('Modify status code: "+response.statusCode); 
 			if (!error && response.statusCode >= 200 && response.statusCode <=299) { // all 2xx codes are OK
+			   console.log(body);
 			   let strJSON = JSON.parse(body);
 			   console.log(strJSON);
 			   assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
