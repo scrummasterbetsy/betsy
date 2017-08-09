@@ -6,6 +6,13 @@ let express = require('express');
 let bodyParser = require('body-parser');
 let request = require('request');
 
+
+
+ const Prompts = new Array("\nWhat else can I do for you?", 
+                          "\nIs there anything else you want me to do?",
+                          "\nWhat else do you want to do?",
+                          "\nAnything else?"); // Global for all modules
+
 let userstories = require('./userstories.js');
 
 let app = express();
@@ -17,10 +24,7 @@ app.post('/', function (req, res) {
   //console.log('Request headers: ' + JSON.stringify(req.headers));
   //console.log('Request body: ' + JSON.stringify(req.body));
  
- const Prompts = new Array("\nWhat else can I do for you?", 
-                          "\nIs there anything else you want me to do?",
-                          "\nWhat else do you want to do?",
-                          "\nAnything else?");
+
  
   
  function UserStoriesOLD(assistant) {
