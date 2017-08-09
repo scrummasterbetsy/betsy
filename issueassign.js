@@ -1,6 +1,8 @@
+let request = require('request');
+
 exports.IssueAssign = function(assistant) {
    console.log('+++IssueAssign+++');
-   console.log(assistant.getRawInput());
+   //console.log(assistant.getRawInput());
    let strProjectID = assistant.getArgument('ProjectID');
    let strIssueID = assistant.getArgument('IssueID');
    let strAssignee = assistant.getArgument('Assignee');
