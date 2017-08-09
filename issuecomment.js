@@ -1,4 +1,4 @@
-export.IssueComment = function(assistant) {
+exports.IssueComment = function(assistant) {
    console.log('+++IssueComment+++');
    console.log(assistant.getRawInput());
    let strProjectID = assistant.getArgument('ProjectID');
