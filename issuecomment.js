@@ -1,6 +1,8 @@
+let request = require('request');
+
 exports.IssueComment = function(assistant) {
    console.log('+++IssueComment+++');
-   console.log(assistant.getRawInput());
+   //console.log(assistant.getRawInput());
    let strProjectID = assistant.getArgument('ProjectID');
    let strIssueID = assistant.getArgument('IssueID');
    let strComment = assistant.getArgument('Comment');
