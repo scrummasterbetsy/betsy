@@ -92,9 +92,9 @@ app.post('/', function (req, res) {
 			console.log('Modify status code: '+response.statusCode); 
 			if (!error && response.statusCode >= 200 && response.statusCode <=299) { // all 2xx codes are OK
 			   // NO BODY console.log(body);
-			   assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
+			   assistant.ask('The comment "'+strComment+'" has been added to issue'+strProjectID+'-'+strIssueID+'. '+nextPrompt);
 		   	} else {
-			  assistant.ask('There was an error in the execution of ChangeIssueStatus.'+nextPrompt);
+			  assistant.ask('There was an error in the execution of AddComment.'+nextPrompt);
 			  return;
 			} // end if (!error && response.statusCode == 200)
 		  })  // end request
