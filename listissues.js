@@ -1,3 +1,5 @@
+let request = require('request');
+
 exports.ListIssues = function(assistant) {
    console.log('+++ListIssues+++');
    //console.log(assistant.getRawInput());
