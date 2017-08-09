@@ -1,4 +1,4 @@
-export.IssueAssign = function(assistant) {
+exports.IssueAssign = function(assistant) {
    console.log('+++IssueAssign+++');
    console.log(assistant.getRawInput());
    let strProjectID = assistant.getArgument('ProjectID');
