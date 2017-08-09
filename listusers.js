@@ -32,7 +32,7 @@ const Prompts = new Array("\nWhat else can I do for you?",
         let strOut = ' ';
 	      for (var key in strJSON) {
            strOut += ' \nUser '+key+': '+strJSON[key].displayName;
-           strOut += ' I.D.: '+strJSON[key].name; // these are the IDs used in Jira
+           strOut += ', I.D.: '+strJSON[key].name+'. '; // these are the IDs used in Jira
         } // end for     
         strOut += '.';
 
