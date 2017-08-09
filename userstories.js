@@ -1,3 +1,5 @@
+let request = require('request');
+
 exports.UserStories = function(assistant) {
    console.log('UserStories NEW');
     const Prompts = new Array("\nWhat else can I do for you?", 
