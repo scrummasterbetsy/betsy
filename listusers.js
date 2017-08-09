@@ -1,3 +1,5 @@
+let request = require('request');
+
 exports.ListUsers = function(assistant) {
    console.log('+++ListUsers+++');
 
