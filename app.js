@@ -413,7 +413,7 @@ app.post('/', function (req, res) {
   
          
   let actionMap = new Map();
-  actionMap.set('input.userstories', userstories.UserStories);
+  actionMap.set('input.userstories', userstories.UserStories());
   actionMap.set('input.issuecomment', IssueComment);
   actionMap.set('input.issueassign', IssueAssign);
   actionMap.set('input.changeissuestatus', ChangeIssueStatus);	
