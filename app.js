@@ -140,9 +140,11 @@ app.post('/', function (req, res) {
  function ListItems(assistant) {
    console.log('+++ListItems+++');
    console.log(assistant.getRawInput());
+   let strProjectID = assistant.getArgument('ProjectID');
    let strHeadTail = assistant.getArgument('HeadTail');
    let strListSize = assistant.getArgument('ListSize');
    let strTaskStatus = assistant.getArgument('TaskStatus');
+   console.log('ProjectID '+strProjectID);
    console.log('HeadTail '+strHeadTail);
    console.log('ListSize '+strListSize);
    console.log('TaskStatus '+strTaskStatus);
