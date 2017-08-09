@@ -81,7 +81,7 @@ app.post('/', function (req, res) {
 		  request(options, function (error, response, body) {
 			if (error) {
 			  console.log(error);
-				assistant.ask('There was an error in Change Issue Status. '+error +nextPrompt);
+				assistant.ask('There was an error in AddComment. '+error +nextPrompt);
 				return;
 			} // end if
 			console.log('Modify status code: '+response.statusCode); 
@@ -106,27 +106,29 @@ app.post('/', function (req, res) {
   })  // end request
 
  } // end IssueComment	
-	
+
 ///////////////////////////////////////////////////////  
  function IssueAssign(assistant) {
-   console.log('+++IssueAssign+++');
+   console.log('+++IssueComment+++');
    console.log(assistant.getRawInput());
    let strProjectID = assistant.getArgument('ProjectID');
    let strIssueID = assistant.getArgument('IssueID');
-   let strFirstName = assistant.getArgument('FirstName');
-   let strLastName = assistant.getArgument('LastName');	 
+   let strAssignee = assistant.getArgument('Assignee');
    console.log('ProjectID '+strProjectID);
    console.log('IssueID '+strIssueID);
-   console.log('FirstName '+strFirstName);
-   console.log('LastName '+strLastName);
-	  
+   console.log('Assignee '+strAssignee);
 
    let strOut = ' ';
-   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
+   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];   
 
 	 
-assistant.ask('IssueAssign. '+nextPrompt);	 
-return; /////////////////////////////////// STILL TODO!!!!	   
+	 
+	 
+assistant.ask(nextPrompt);
+return; 
+	 
+	 
+	 
 	 
    // Find current status
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3D'+strProjectID.toUpperCase()+'+AND+issueKey%3D'+strProjectID+'-'+strIssueID;
@@ -140,7 +142,7 @@ return; /////////////////////////////////// STILL TODO!!!!
   request(options, function (error, response, body) {
     if (error) {
       console.log(error);
-        assistant.ask('There was an error in Issue Assign. '+error +nextPrompt);
+        assistant.ask('There was an error in Issue Comment. '+error +nextPrompt);
         return;
     } // end if
     console.log(response.statusCode); 
@@ -148,46 +150,19 @@ return; /////////////////////////////////// STILL TODO!!!!
         let strJSON = JSON.parse(body);
         console.log(strJSON);
         if (strJSON.total==1) {
-          let strStatusCur = ' ' ;
-          strStatusCur = strJSON.issues[0].fields.status.name;
-          strOut = 'Current status of '+strProjectID+'-'+strIssueID+' is '+strStatusCur;
-          console.log(strOut);
 
-   		  //////// Now modify the status
-		  console.log('START MODIFY');
-		  let objModify = {};
-		  strStatusCur = strStatusCur.toUpperCase();
-		  strStatusTarget = strStatusTarget.toUpperCase();
-		  if (strStatusCur=='TO DO' && strStatusTarget=='IN PROGRESS') {
-			objModify = {"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"351"}};   
-		  } else if (strStatusCur=='TO DO' && strStatusTarget=='DONE') {
-			objModify = {"update":{"comment":[{"add":{"body":"Work has been cancelled."}}]},"transition":{"id":"411"}};
-		  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='TO DO') {
-			objModify = {"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"371"}};
-		  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='DONE') {
-			objModify = {"update":{"comment":[{"add":{"body":"Work has been completed."}}]},"transition":{"id":"421"}};
-		  } else if (strStatusCur=='IN PROGRESS' && strStatusTarget=='BLOCKED') {
-			objModify = {"update":{"comment":[{"add":{"body":"Work has been blocked."}}]},"transition":{"id":"431"}};
-		  } else if (strStatusCur=='BLOCKED' && strStatusTarget=='IN PROGRESS') {
-			objModify = {"update":{"comment":[{"add":{"body":"Work has been started."}}]},"transition":{"id":"401"}};
-		  } else if (strStatusCur=='DONE' && strStatusTarget=='TO DO') {
-			objModify = {"update":{"comment":[{"add":{"body":"Work has been reopened."}}]},"transition":{"id":"361"}};
-		  } else if (strStatusCur==strStatusTarget) {
-			  assistant.ask('The current status of'+strProjectID+'-'+strIssueID+' is already set to '+strStatusCur+'. No need for a change.'+nextPrompt);
-			  return;
-		  } else {
-			  assistant.ask('Error: Transition from'+strStatusCur+' to '+strStatusTarget+'not defined.'+nextPrompt);
-			  return;
-		  } // end if
-			
-		   strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/'+strProjectID+'-'+strIssueID+'/transitions?expand=transitions.fields';
+   		  //////// Now add the comment
+		  console.log('START ASSIGN');
+		  let objAssignee = {"name": strAssignee};
+					
+		   strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/'+strProjectID+'-'+strIssueID+'/assignee';
 		   console.log(strURL);
 		   
 		  options = {
 			headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
 			method: 'POST',
 			url: strURL,
-			json: objModify
+			json: objAssignee
 		  }
 		  console.log(options);
 
@@ -195,21 +170,21 @@ return; /////////////////////////////////// STILL TODO!!!!
 		  request(options, function (error, response, body) {
 			if (error) {
 			  console.log(error);
-				assistant.ask('There was an error in Change Issue Status. '+error +nextPrompt);
+				assistant.ask('There was an error in Assign Issue. '+error +nextPrompt);
 				return;
 			} // end if
 			console.log('Modify status code: '+response.statusCode); 
 			if (!error && response.statusCode >= 200 && response.statusCode <=299) { // all 2xx codes are OK
 			   // NO BODY console.log(body);
-			   assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
+			   assistant.ask('Issue '+strProjectID+'-'+strIssueID+' has been assigned to "'+strAssignee+'". '+nextPrompt);
 		   	} else {
-			  assistant.ask('There was an error in the execution of ChangeIssueStatus.'+nextPrompt);
+			  assistant.ask('There was an error in the execution of AssignIssue.'+nextPrompt);
 			  return;
 			} // end if (!error && response.statusCode == 200)
 		  })  // end request
 
 		} else {
-           strOut = 'No issue with name '+strProjectID+'-'+strIssueID+' found. ';
+           strOut = 'Issue "'+strProjectID+'-'+strIssueID+'" does not exist. ';
            assistant.ask(strOut+nextPrompt);
            return;
         }
@@ -220,7 +195,6 @@ return; /////////////////////////////////// STILL TODO!!!!
   })  // end request
 
  } // end IssueAssign	
-
 ///////////////////////////////////////////////////////  
  function ChangeIssueStatus(assistant) {
    console.log('+++ChangeItemStatus+++');
