@@ -109,7 +109,7 @@ app.post('/', function (req, res) {
 
 ///////////////////////////////////////////////////////  
  function IssueAssign(assistant) {
-   console.log('+++IssueComment+++');
+   console.log('+++IssueAssign+++');
    console.log(assistant.getRawInput());
    let strProjectID = assistant.getArgument('ProjectID');
    let strIssueID = assistant.getArgument('IssueID');
@@ -120,15 +120,6 @@ app.post('/', function (req, res) {
 
    let strOut = ' ';
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];   
-
-	 
-	 
-	 
-assistant.ask(nextPrompt);
-return; 
-	 
-	 
-	 
 	 
    // Find current status
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3D'+strProjectID.toUpperCase()+'+AND+issueKey%3D'+strProjectID+'-'+strIssueID;
