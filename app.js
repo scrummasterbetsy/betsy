@@ -37,14 +37,9 @@ app.post('/', function (req, res) {
    console.log('ProjectID '+strProjectID);
    console.log('IssueID '+strIssueID);
    console.log('Comment '+strComment);
-	 
- 
 
    let strOut = ' ';
-   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
-	 
-//assistant.ask('IssueComment. '+nextPrompt);	 
-//return; /////////////////////////////////// STILL TODO!!!!	   
+   let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];   
 	 
    // Find current status
    let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3D'+strProjectID.toUpperCase()+'+AND+issueKey%3D'+strProjectID+'-'+strIssueID;
@@ -92,7 +87,7 @@ app.post('/', function (req, res) {
 			console.log('Modify status code: '+response.statusCode); 
 			if (!error && response.statusCode >= 200 && response.statusCode <=299) { // all 2xx codes are OK
 			   // NO BODY console.log(body);
-			   assistant.ask('The comment "'+strComment+'" has been added to issue'+strProjectID+'-'+strIssueID+'. '+nextPrompt);
+			   assistant.ask('The comment "'+strComment+'" has been added to issue '+strProjectID+'-'+strIssueID+'. '+nextPrompt);
 		   	} else {
 			  assistant.ask('There was an error in the execution of AddComment.'+nextPrompt);
 			  return;
@@ -100,7 +95,7 @@ app.post('/', function (req, res) {
 		  })  // end request
 
 		} else {
-           strOut = 'No issue with name '+strProjectID+'-'+strIssueID+' found. ';
+           strOut = 'Issue "'+strProjectID+'-'+strIssueID+'" does not exist. ';
            assistant.ask(strOut+nextPrompt);
            return;
         }
