@@ -1,6 +1,8 @@
+let request = require('request');
+
 exports.ChangeIssueStatus = function(assistant) {
    console.log('+++ChangeItemStatus+++');
-   console.log(assistant.getRawInput());
+   //console.log(assistant.getRawInput());
    let strProjectID = assistant.getArgument('ProjectID');
    let strIssueID = assistant.getArgument('IssueID');
    let strStatusTarget = assistant.getArgument('TaskStatus');
@@ -107,4 +109,4 @@ exports.ChangeIssueStatus = function(assistant) {
   })  // end request
 
  } // end ChangeIssueStatus
-  
+ 
