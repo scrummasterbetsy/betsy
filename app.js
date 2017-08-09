@@ -42,7 +42,7 @@ app.post('/', function (req, res) {
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];
    
    // Find current status
-   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY+AND+issueKey%3D'+strProjectID+'-'+strIssueID;
+   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3D'+strProjectID.toUpperCase()+'+AND+issueKey%3D'+strProjectID+'-'+strIssueID;
    console.log(strURL);
    let options = {
      headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
@@ -139,7 +139,7 @@ app.post('/', function (req, res) {
 ///////////////////////////////////////////////////////  
  function ListItems(assistant) {
    console.log('+++ListItems+++');
-   console.log(assistant.getRawInput());
+   //console.log(assistant.getRawInput());
    let strProjectID = assistant.getArgument('ProjectID');
    let strHeadTail = assistant.getArgument('HeadTail');
    let strListSize = assistant.getArgument('ListSize');
@@ -150,7 +150,7 @@ app.post('/', function (req, res) {
    console.log('TaskStatus '+strTaskStatus);
    
    // Configure the request
-   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3DBETSY';
+   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3D'+strProjectID.toUpperCase();
    if (strTaskStatus) strURL += '+AND+status+in+%28%22'+strTaskStatus+'%22%29';
    console.log(strURL);
    
