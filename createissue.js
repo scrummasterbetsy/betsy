@@ -28,7 +28,7 @@ let objIssue1 =	{
 "fields": {
    "project":
    { 
-      "key": "BETSY"
+      "key": strProjectID
    },
    "summary": "REST EXAMPLE",
    "description": "Creating an issue via REST API",
@@ -57,7 +57,7 @@ let objIssue1 =	{
 			return;
 		} // end if
 		console.log('Create Issue status code: '+response.statusCode); 
-		if (!error && response.statusCode == 200) {
+		if (!error && (response.statusCode == 200 || response.statusCode == 201) ) {
 		   console.log(body);
 		   let strJSON = JSON.parse(body);
 		   assistant.ask(strType+' "'+strJSON.key+'" was successfully created. '+nextPrompt);
