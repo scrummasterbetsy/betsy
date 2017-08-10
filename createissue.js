@@ -6,7 +6,7 @@ exports.CreateIssue = function(assistant) {
 	let strProjectID = assistant.getArgument('ProjectID');
 	let strIssueType = assistant.getArgument('IssueType');
 	let strSummary = assistant.getArgument('Summary');
-	let strDescription  = assistant.getArgument('strDescription');
+	let strDescription  = assistant.getArgument('Description');
 	console.log('ProjectID: '+strProjectID);
 	console.log('IssueType: '+strIssueType);
 	console.log('Summary: '+strSummary);
