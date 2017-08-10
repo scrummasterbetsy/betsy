@@ -28,7 +28,7 @@ let objIssue1 =	{
 "fields": {
    "project":
    { 
-      "key": strProjectID
+      "key": "Betsy"
    },
    "summary": "REST EXAMPLE",
    "description": "Creating an issue via REST API",
