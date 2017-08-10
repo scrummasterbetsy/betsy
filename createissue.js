@@ -50,8 +50,8 @@ exports.CreateIssue = function(assistant) {
 		   console.log(body);
 		   //let strJSON = JSON.parse(body);
 		   //console.log(strJSON);
-		   //assistant.ask(strType+' "'+strJSON.key+'" was successfully created. '+nextPrompt);
-		   assistant.ask('The '+strType+' "" was successfully created. '+nextPrompt);
+		   //assistant.ask(strIssueType+' "'+strJSON.key+'" was successfully created. '+nextPrompt);
+		   assistant.ask('The '+strIssueType+' "" was successfully created. '+nextPrompt);
 		} else {
 		  assistant.ask('There was an error in the execution of Create Issue.'+nextPrompt);
 		  return;
