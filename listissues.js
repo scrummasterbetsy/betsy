@@ -42,7 +42,7 @@ exports.ListIssues = function(assistant) {
     console.log(response.statusCode); 
     if (!error && response.statusCode == 200) {
         let strJSON = JSON.parse(body);
-        //console.log(strJSON);
+        console.log(strJSON);
       
         // Prepare output 
         let strOut = ' ';
