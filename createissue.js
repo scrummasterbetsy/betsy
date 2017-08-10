@@ -48,10 +48,10 @@ exports.CreateIssue = function(assistant) {
 		console.log('Create Issue status code: '+response.statusCode); 
 		if (!error && (response.statusCode == 200 || response.statusCode == 201) ) {
 		   console.log(body);
-		   let strJSON = JSON.parse(body.split('\'').join('"')); // JSON.parse does not work with single-quotes
-		   console.log(strJSON);
+		   //let strJSON = JSON.parse(body);
+		   //console.log(strJSON);
 		   //assistant.ask(strType+' "'+strJSON.key+'" was successfully created. '+nextPrompt);
-		   assistant.ask(strType+' "" was successfully created. '+nextPrompt);
+		   assistant.ask('The '+strType+' "" was successfully created. '+nextPrompt);
 		} else {
 		  assistant.ask('There was an error in the execution of Create Issue.'+nextPrompt);
 		  return;
