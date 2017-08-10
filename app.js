@@ -9,6 +9,7 @@ let request = require('request');
 
 
 let userstories = require('./userstories.js');
+let createissue = require('./createissue.js');
 let issuecomment = require('./issuecomment.js');
 let issueassign = require('./issueassign.js');
 let changeissuestatus = require('./changeissuestatus.js');
@@ -28,6 +29,7 @@ app.post('/', function (req, res) {
 // define the actions map         
   let actionMap = new Map();
   actionMap.set('input.userstories', userstories.UserStories);
+  actionMap.set('create.issue', createissue.Create.Issue);
   actionMap.set('input.issuecomment', issuecomment.IssueComment);
   actionMap.set('input.issueassign', issueassign.IssueAssign);
   actionMap.set('input.changeissuestatus', changeissuestatus.ChangeIssueStatus);	
