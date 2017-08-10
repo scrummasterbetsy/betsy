@@ -24,6 +24,7 @@ exports.CreateIssue = function(assistant) {
 			    "summary": strSummary, "description": strDescription, "issuetype": {"name": strIssueType.substr(0,1).toUpperCase()+
 													strIssueType.substring(1,strIssueType.length).toLowerCase() } }
 	}
+	console.log(objIssue.fields);
 	
 				
 	strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/';
