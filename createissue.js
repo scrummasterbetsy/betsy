@@ -20,7 +20,7 @@ exports.CreateIssue = function(assistant) {
 	 
  
 	let objIssue = {
-		"fields": { "project":  { "key": strProjectID },
+		"fields": { "project":  { "key": strProjectID.toUpperCase() },
 			    "summary": strSummary, "description": strDescription, "issuetype": {"name": strIssueType } }
 	}
 	
@@ -28,7 +28,7 @@ let objIssue1 =	{
 "fields": {
    "project":
    { 
-      "key": "Betsy"
+      "key": strProjectID.toUpperCase()
    },
    "summary": "REST EXAMPLE",
    "description": "Creating an issue via REST API",
