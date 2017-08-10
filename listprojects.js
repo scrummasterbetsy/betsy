@@ -30,9 +30,10 @@ const Prompts = new Array("\nWhat else can I do for you?",
         //console.log(strJSON);
       
         // Prepare output 
-        let strOut = 'These are the available projects: ';
+        let strOut = 'Here are the available projects: ';
 	      for (var key in strJSON) {
-           strOut += ' \nProject '+key+': '+strJSON[key].key;
+//           strOut += ' \nProject '+key+': '+strJSON[key].key;
+           strOut += ' \n'+strJSON[key].key+'.';
            //strOut += ', I.D.: '+strJSON[key].name+'. '; // these are the IDs used in Jira
         } // end for     
         strOut += '.';
