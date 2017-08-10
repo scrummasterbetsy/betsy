@@ -46,7 +46,7 @@ exports.CreateIssue = function(assistant) {
 		} // end if
 		console.log('Create Issue status code: '+response.statusCode); 
 		if (!error && response.statusCode == 200) {
-		   NO BODY console.log(body);
+		   console.log(body);
 		   let strJSON = JSON.parse(body);
 		   assistant.ask(strType+' "'+strJSON.key+'" was successfully created. '+nextPrompt);
 		} else {
