@@ -29,7 +29,7 @@ app.post('/', function (req, res) {
 // define the actions map         
   let actionMap = new Map();
   actionMap.set('input.userstories', userstories.UserStories);
-  actionMap.set('create.issue', createissue.Create.Issue);
+  actionMap.set('create.issue', createissue.CreateIssue);
   actionMap.set('input.issuecomment', issuecomment.IssueComment);
   actionMap.set('input.issueassign', issueassign.IssueAssign);
   actionMap.set('input.changeissuestatus', changeissuestatus.ChangeIssueStatus);	
