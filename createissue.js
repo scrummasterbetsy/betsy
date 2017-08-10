@@ -49,6 +49,7 @@ exports.CreateIssue = function(assistant) {
 		if (!error && (response.statusCode == 200 || response.statusCode == 201) ) {
 		   console.log(body);
 		   let strJSON = JSON.parse(body);
+		   console.log(strJSON);
 		   assistant.ask(strType+' "'+strJSON.key+'" was successfully created. '+nextPrompt);
 		} else {
 		  assistant.ask('There was an error in the execution of Create Issue.'+nextPrompt);
