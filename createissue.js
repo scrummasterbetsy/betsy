@@ -20,11 +20,23 @@ exports.CreateIssue = function(assistant) {
 	 
  
 	let objIssue = {
-		"fields": {
-			"project":  { "key": strProjectID },
-			"summary": strSummary, "description": strDescription, "issuetype": {"name": strIssueType }
-		}
+		"fields": { "project":  { "key": strProjectID },
+			    "summary": strSummary, "description": strDescription, "issuetype": {"name": strIssueType } }
 	}
+	
+let objIssue1 =	{
+"fields": {
+   "project":
+   { 
+      "key": "BETSY"
+   },
+   "summary": "REST EXAMPLE",
+   "description": "Creating an issue via REST API",
+   "issuetype": {
+      "name": "Bug"
+   }
+  }
+}
 				
 	strURL = 'https://projectbetsy.atlassian.net/rest/api/2/issue/';
 	console.log(strURL);
@@ -33,7 +45,7 @@ exports.CreateIssue = function(assistant) {
 		headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
 		method: 'POST',
 		url: strURL,
-		json: objIssue
+		json: objIssue1
 	}
 	console.log(options);
 
