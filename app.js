@@ -14,7 +14,7 @@ let issueassign = require('./issueassign.js');
 let changeissuestatus = require('./changeissuestatus.js');
 let listissues = require('./listissues.js');
 let listusers = require('./listusers.js');
-
+let listprojects = require('./listprojects.js');
 
 let app = express();
 app.use(bodyParser.json({type: 'application/json'}));
@@ -31,8 +31,9 @@ app.post('/', function (req, res) {
   actionMap.set('input.issuecomment', issuecomment.IssueComment);
   actionMap.set('input.issueassign', issueassign.IssueAssign);
   actionMap.set('input.changeissuestatus', changeissuestatus.ChangeIssueStatus);	
-  actionMap.set('input.listissues', listissues.ListIssues);
-  actionMap.set('input.listusers', listusers.ListUsers);	
+  actionMap.set('list.listissues', listissues.ListIssues);
+  actionMap.set('list.listusers', listusers.ListUsers);
+  actionMap.set('list.projects', listprojects.ListProjects);	
   assistant.handleRequest(actionMap);
 
 });
