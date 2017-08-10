@@ -4,11 +4,11 @@ exports.CreateIssue = function(assistant) {
 	console.log('+++CreateIssue+++');
 	//console.log(assistant.getRawInput());
 	let strProjectID = assistant.getArgument('ProjectID');
-	let strType = assistant.getArgument('Type');
+	let strIssueType = assistant.getArgument('IssueType');
 	let strSummary = assistant.getArgument('Summary');
 	let strDescription  = assistant.getArgument('strDescription');
 	console.log('ProjectID: '+strProjectID);
-	console.log('Type: '+strType);
+	console.log('IssueType: '+strIssueType);
 	console.log('Summary: '+strSummary);
 	console.log('Description: '+strDescription);
   
@@ -22,7 +22,7 @@ exports.CreateIssue = function(assistant) {
 	let objIssue = {
 		"fields": {
 			"project":  { "key": strProjectID },
-			"summary": strSummary, "description": strDescription, "issuetype": {"name": strType }
+			"summary": strSummary, "description": strDescription, "issuetype": {"name": strIssueType }
 		}
 	}
 				
