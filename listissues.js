@@ -71,8 +71,10 @@ exports.ListIssues = function(assistant) {
         } // end
       
         for (let nInd=nStart; nInd<nEnd; nInd++) { 
-           strOut += ' \nIssue '+strJSON.issues[nInd].key;
+           //strOut += ' \nIssue '+strJSON.issues[nInd].key;
           // strOut += ', I.D.: '+strJSON.issues[nInd].id;
+           strOut += ' \n'+strJSON.issues[nInd].key;
+           strOut += ': '+strJSON.issues[nInd].fields.summary;
            strOut += ', Status: '+strJSON.issues[nInd].fields.status.name;
            strOut += '.';
         } // end for     
