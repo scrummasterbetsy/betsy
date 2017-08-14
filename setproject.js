@@ -43,7 +43,7 @@ exports.SetProject = function(assistant) {
         strOut += ' \nWhich one do you want to work with?';
 
         //console.log(strOut);
-        assistant.setContext('AskForProject',1);
+        assistant.setContext('AskForProjectID',1);
         assistant.ask(strOut);
     } // end if (!error && response.statusCode == 200)
 }) // end request 
