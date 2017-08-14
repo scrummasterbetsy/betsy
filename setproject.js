@@ -30,14 +30,14 @@ exports.SetProject = function(assistant) {
         // Check if current project exists
         for (var key in strJSON) {
           if (strProjectID.toUpperCase() == strJSON[key].key.toUpperCase()) {
-            assistant.ask('\nOK. The project is now set to "'+$ProjectID+'". To change the project just say "Set Project". Please tell me what to do.');
+            assistant.ask('\nOK. The project is now set to "'+strProjectID+'". To change the project just say "Set Project". Please tell me what to do.');
             return;
           } // end 
         } // end for
          
          // Project not found. Hence we need to ask one more time.
         // Prepare output 
-        let strOut = 'I could not find project "'+$ProjectID+'". \nHere is the list of all available projects: ';
+        let strOut = 'I could not find project "'+strProjectID+'". \nHere is the list of all available projects: ';
 	      for (var key in strJSON) {
            strOut += ' \n'+strJSON[key].key+'.';
         } // end for     
