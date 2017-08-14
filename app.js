@@ -15,6 +15,7 @@ let issueassign = require('./issueassign.js');
 let changeissuestatus = require('./changeissuestatus.js');
 let listissues = require('./listissues.js');
 let listusers = require('./listusers.js');
+let setproject = require('./setproject.js');
 let listprojects = require('./listprojects.js');
 
 let app = express();
@@ -35,6 +36,7 @@ app.post('/', function (req, res) {
   actionMap.set('input.changeissuestatus', changeissuestatus.ChangeIssueStatus);	
   actionMap.set('list.listissues', listissues.ListIssues);
   actionMap.set('list.listusers', listusers.ListUsers);
+  actionMap.set('input.setproject', setproject.SetProject);	
   actionMap.set('list.projects', listprojects.ListProjects);	
   assistant.handleRequest(actionMap);
 
