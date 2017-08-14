@@ -28,9 +28,8 @@ exports.SetProject = function(assistant) {
         //console.log(strJSON);
         
         // Check if current project exists
-	let strProjectUC = strProjectID.toUpperCase();
-	      for (var key in strJSON) {
-          if (strProjectUC.equals(strJSON[key].key.toUpperCase())) {
+        for (var key in strJSON) {
+          if (strProjectID.toUpperCase() == strJSON[key].key.toUpperCase()) {
             assistant.ask('\nOK. The project is now set to "'+$ProjectID+'". To change the project just say "Set Project". Please tell me what to do.');
             return;
           } // end 
