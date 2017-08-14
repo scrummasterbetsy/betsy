@@ -23,7 +23,6 @@ exports.SetProject = function(assistant) {
     } // end if
     console.log(response.statusCode); 
     if (!error && response.statusCode == 200) {
-	 console.log(body);
         let strJSON = JSON.parse(body);
         //console.log(strJSON);
         
