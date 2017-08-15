@@ -1,0 +1,41 @@
+{
+	"id": "7e1fec8d-ef6b-4b3d-8eec-a881f83e5391",
+	"timestamp": "2017-08-15T00:45:37.903Z",
+	"lang": "en",
+	"result": {
+		"source": "agent",
+		"resolvedQuery": "Switch to Betsy",
+		"speech": "",
+		"action": "input.setproject",
+		"actionIncomplete": false,
+		"parameters": {
+			"ProjectID": "Betsy"
+		},
+		"contexts": [
+			{
+				"name": "projectname",
+				"parameters": {
+					"ProjectID": "Betsy",
+					"ProjectID.original": "Betsy"
+				},
+				"lifespan": 1
+			}
+		],
+		"metadata": {
+			"intentId": "a1541c92-f6a9-4e8f-98e9-49a326408084",
+			"webhookUsed": "true",
+			"webhookForSlotFillingUsed": "false",
+			"intentName": "Set Project Intent"
+		},
+		"fulfillment": {
+			"speech": "",
+			"messages": []
+		},
+		"score": 0.4699999988079071
+	},
+	"status": {
+		"code": 200,
+		"errorType": "success"
+	},
+	"sessionId": "2c3f305b-027f-414c-8390-b8540658ee06"
+}
