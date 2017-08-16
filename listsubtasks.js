@@ -18,15 +18,15 @@ exports.ListSubtasks = function(assistant) {
                           "\nAnything else?");
    let nextPrompt = Prompts[Math.floor(Math.random() * Prompts.length)];   
 	 
-   // Find current status
-   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3D'+strProjectID.toUpperCase()+'+AND+issueKey%3D'+strProjectID+'-'+strIssueID;
+   // Check is the parent exists
+   let strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3D'+strProjectID.toUpperCase()+'+AND+issueKey%3D'+strProjectID+'-'+strIssueID+'+and+type%3DStory';
    console.log(strURL);
    let options = {
      headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
      method: 'GET',
      url: strURL
    }
-  // Find out is the parent exists
+  
   request(options, function (error, response, body) {
     if (error) {
       console.log(error);
