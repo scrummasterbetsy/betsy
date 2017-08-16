@@ -7,16 +7,17 @@ let bodyParser = require('body-parser');
 let request = require('request');
 let morganBody = require('morgan-body');
 
-let userstories = require('./userstories.js');
 let createissue = require('./createissue.js');
 let issuecomment = require('./issuecomment.js');
 let issueassign = require('./issueassign.js');
 let changeissuestatus = require('./changeissuestatus.js');
+let setproject = require('./setproject.js');
+
+let listprojects = require('./listprojects.js');
 let listissues = require('./listissues.js');
 let listusers = require('./listusers.js');
-let setproject = require('./setproject.js');
-let listprojects = require('./listprojects.js');
 let listsubtasks = require('./listsubtasks.js');
+let listuserstories = require('./listuserstories.js');
 
 let app = express();
 app.use(bodyParser.json({type: 'application/json'}));
@@ -30,16 +31,19 @@ app.post('/', function (req, res) {
 
 // define the actions map
   let actionMap = new Map();
-  actionMap.set('input.userstories', userstories.UserStories);
+  actionMap.set('input.setproject', setproject.SetProject);
   actionMap.set('create.issue', createissue.CreateIssue);
   actionMap.set('input.issuecomment', issuecomment.IssueComment);
   actionMap.set('input.issueassign', issueassign.IssueAssign);
   actionMap.set('input.changeissuestatus', changeissuestatus.ChangeIssueStatus);
-  actionMap.set('list.listissues', listissues.ListIssues);
-  actionMap.set('list.listusers', listusers.ListUsers);
-  actionMap.set('input.setproject', setproject.SetProject);
+
+  
   actionMap.set('list.projects', listprojects.ListProjects);
-  actionMap.set('list.listsubtasks', listsubtasks.ListSubtasks);
+  actionMap.set('list.users', listusers.ListUsers);
+  actionMap.set('list.issues', listissues.ListIssues);
+  actionMap.set('list.userstories', listuserstories.ListUserStories);
+  actionMap.set('list.subtasks', listsubtasks.ListSubtasks);
+  
   assistant.handleRequest(actionMap);
 
 });
