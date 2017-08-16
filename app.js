@@ -16,6 +16,7 @@ let listissues = require('./listissues.js');
 let listusers = require('./listusers.js');
 let setproject = require('./setproject.js');
 let listprojects = require('./listprojects.js');
+let listsubtasks = require('./listsubtasks.js');
 
 let app = express();
 app.use(bodyParser.json({type: 'application/json'}));
@@ -38,6 +39,7 @@ app.post('/', function (req, res) {
   actionMap.set('list.listusers', listusers.ListUsers);
   actionMap.set('input.setproject', setproject.SetProject);
   actionMap.set('list.projects', listprojects.ListProjects);
+  actionMap.set('list.listsubtasks', listsubtasks.ListSubtasks);
   assistant.handleRequest(actionMap);
 
 });
