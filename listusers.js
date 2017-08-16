@@ -32,9 +32,9 @@ const Prompts = new Array("\nWhat else can I do for you?",
         let strOut = '<speak>';
 	      for (var key in strJSON) {
            strOut += ' \nUser '+key+': '+strJSON[key].displayName;
-           strOut += ', I.D.: '+strJSON[key].name+'<break time="500ms"/>'; // these are the IDs used in Jira
+           strOut += ', I.D.: '+strJSON[key].name+'<break time="1s"/>'; // these are the IDs used in Jira
         } // end for     
-        strOut += '.</speak>';
+        strOut += '</speak>';
 
         //console.log(strOut);
         assistant.ask(strOut+nextPrompt);
