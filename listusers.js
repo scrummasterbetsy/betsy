@@ -31,7 +31,8 @@ const Prompts = new Array("\nWhat else can I do for you?",
         // Prepare output 
         let strOut = '<speak>';
 	      for (var key in strJSON) {
-           strOut += ' \nUser '+key+': '+strJSON[key].displayName;
+           //strOut += ' \nUser '+key+': '+strJSON[key].displayName;
+           strOut += ' \n'+strJSON[key].displayName;
            strOut += ', I.D.: '+strJSON[key].name+'<break time="1s"/>'; // these are the IDs used in Jira
         } // end for     
         strOut += '</speak>';
