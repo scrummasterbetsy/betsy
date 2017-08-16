@@ -40,9 +40,7 @@ exports.ListSubtasks = function(assistant) {
         if (strJSON.total==1) {
 
    		  //////// Start listing of subtasks
-		  console.log('START LIST SUBTASKS');
-		  let objComment = {"body": strComment};
-					
+		  console.log('START LIST SUBTASKS');				
 		  strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3D'+strProjectID.toUpperCase()+'+and+parent+in+("'+strProjectID+'-'+strIssueID+'")';
  		  console.log(strURL);
 		   
