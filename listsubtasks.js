@@ -42,7 +42,8 @@ exports.ListSubtasks = function(assistant) {
    		  //////// Start listing of subtasks
 		  console.log('START LIST SUBTASKS');				
 		  strURL = 'https://projectbetsy.atlassian.net/rest/api/2/search?jql=project%3D'+strProjectID.toUpperCase()+'+and+parent+in+("'+strProjectID+'-'+strIssueID+'")';
- 		  console.log(strURL);
+                  if (strTaskStatus) strURL += '+AND+status+in+%28%22'+strTaskStatus+'%22%29';
+		  console.log(strURL);
 		   
 		  options = {
 			headers: {'Content-Type':'application/json', 'Authorization':'Basic YmV0c3k6QmV0c3lCb3Q4MjI='},
