@@ -30,18 +30,13 @@ exports.AddCommentConfirmation = function(assistant) {
     if (!error && response.statusCode == 200) {
         let strJSON = JSON.parse(body);
         console.log(strJSON);
-		if (strJSON.total==1) {
-			
-        assistant.setContext('AddCommentConfirmation',1);
-		let strOut = 'You want to add the following comment to '+strJSON.issues[0].fields.issuetype.name+' "'+strProjectID+'-'+strIssueID+'": \n'+strComment+'. \n Is this correct?';
-		
-
-			
-		} else {
-           strOut = 'Issue "'+strProjectID+'-'+strIssueID+'" does not exist. ';
-           assistant.ask(strOut+nextPrompt);
+	if (strJSON.total==1) {	
+           assistant.setContext('AddCommentConfirmation',1);
+	   assistant.ask('You want to add the following comment to '+strJSON.issues[0].fields.issuetype.name+' "'+strProjectID+'-'+strIssueID+'": \n'+strComment+'. \n Is this correct?');
+	} else {
+           assistant.ask('Issue "'+strProjectID+'-'+strIssueID+'" does not exist. '+nextPrompt);
            return;
-        }
+        } // end if
     } else {
       assistant.ask('There was an error in the execution of AddCommentConfirmation.'+nextPrompt);
       return;
