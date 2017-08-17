@@ -6,7 +6,7 @@ exports.IssueComment = function(assistant) {
    let strProjectID = assistant.getArgument('ProjectID');
    let strIssueID = assistant.getArgument('IssueID');
    let strComment = assistant.getArgument('Comment');
-   let strDecisionYesNo = assistant.getArgument('strDecisionYesNo');	
+   let strDecisionYesNo = assistant.getArgument('DecisionYesNo');	
    console.log('ProjectID: '+strProjectID);
    console.log('IssueID: '+strIssueID);
    console.log('Comment: '+strComment);
