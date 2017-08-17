@@ -34,7 +34,7 @@ app.post('/', function (req, res) {
   let actionMap = new Map();
   actionMap.set('input.setproject', setproject.SetProject);
   actionMap.set('create.issue', createissue.CreateIssue);
-  actionMap.set('confirm.addcomment', issuecomment.AddCommentConfirmation);
+  actionMap.set('confirm.addcomment', addcommentconfirmation.AddCommentConfirmation);
   actionMap.set('input.issuecomment', issuecomment.IssueComment);
   actionMap.set('input.issueassign', issueassign.IssueAssign);
   actionMap.set('input.changeissuestatus', changeissuestatus.ChangeIssueStatus);
