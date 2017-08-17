@@ -9,6 +9,7 @@ let morganBody = require('morgan-body');
 
 let createissue = require('./createissue.js');
 let issuecomment = require('./issuecomment.js');
+let addcommentconfirmation = require('./addcommentconfirmation.js');
 let issueassign = require('./issueassign.js');
 let changeissuestatus = require('./changeissuestatus.js');
 let setproject = require('./setproject.js');
@@ -33,6 +34,7 @@ app.post('/', function (req, res) {
   let actionMap = new Map();
   actionMap.set('input.setproject', setproject.SetProject);
   actionMap.set('create.issue', createissue.CreateIssue);
+  actionMap.set('confirm.addcomment', issuecomment.AddCommentConfirmation);
   actionMap.set('input.issuecomment', issuecomment.IssueComment);
   actionMap.set('input.issueassign', issueassign.IssueAssign);
   actionMap.set('input.changeissuestatus', changeissuestatus.ChangeIssueStatus);
