@@ -62,10 +62,10 @@ exports.ChangeIssueStatus = function(assistant) {
 		  } else if (strStatusCur=='DONE' && strStatusTarget=='TO DO') {
 			objModify = {"update":{"comment":[{"add":{"body":"Work has been reopened."}}]},"transition":{"id":"361"}};
 		  } else if (strStatusCur==strStatusTarget) {
-			  assistant.ask('The current status of'+strProjectID+'-'+strIssueID+' is already set to '+strStatusCur+'. No need for a change.'+nextPrompt);
+			  assistant.ask('No need for a change: The status of "'+strProjectID+'-'+strIssueID+'" is already set to '+strStatusCur+'. '+nextPrompt);
 			  return;
 		  } else {
-			  assistant.ask('Error: Transition from'+strStatusCur+' to '+strStatusTarget+'not defined.'+nextPrompt);
+			  assistant.ask('Error: Transition from '+strStatusCur+' to '+strStatusTarget+' not defined.'+nextPrompt);
 			  return;
 		  } // end if
 			
@@ -90,7 +90,7 @@ exports.ChangeIssueStatus = function(assistant) {
 			console.log('Modify status code: '+response.statusCode); 
 			if (!error && response.statusCode >= 200 && response.statusCode <=299) { // all 2xx codes are OK
 			   // NO BODY console.log(body);
-			   assistant.ask('Issue '+strProjectID+'-'+strIssueID+' successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
+			   assistant.ask('Issue "'+strProjectID+'-'+strIssueID+'" successfully changed from '+strStatusCur+' to '+strStatusTarget+'. '+nextPrompt);
 		   	} else {
 			  assistant.ask('There was an error in the execution of ChangeIssueStatus.'+nextPrompt);
 			  return;
